@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - TechCompare{% endblock %}
+
+{% block content %}
+
+<div class="text-center mb-5">
+    <h1 class="display-5 fw-bold">Find the Best Tech Products</h1>
+    <p class="lead text-muted">
+        Compare mobiles & laptops with intelligent scoring system.
+    </p>
+</div>
+
+<!-- Recently Launched -->
+<h3>🔥 Recently Launched</h3>
+<div class="row">
+    {% for product in recent_products %}
+    <div class="col-md-4 mb-4 d-flex">
+        <div class="card p-3 shadow h-100">
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 class="img-fluid mb-2 w-100"
+                 style="height:200px; object-fit:contain; background:#f8f9fa;">
+            {% endif %}
+
+            <h5>
+                <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+                    {{ product.name }}
+                </a>
+            </h5>
+
+            <p>Price: ₹{{ product.price }}</p>
+
+            <p>
+                Score:
+                <span class="badge bg-dark">
+                    {{ product.overall_score }}/100
+                </span>
+            </p>
+
+            {% if product.verdict == "Best Overall" %}
+                <span class="badge bg-success">{{ product.verdict }}</span>
+            {% elif product.verdict == "Excellent Choice" %}
+                <span class="badge bg-primary">{{ product.verdict }}</span>
+            {% elif product.verdict == "Good Option" %}
+                <span class="badge bg-warning text-dark">{{ product.verdict }}</span>
+            {% else %}
+                <span class="badge bg-danger">{{ product.verdict }}</span>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Best Overall -->
+<h3 class="mt-5">⭐ Best Overall</h3>
+<div class="row">
+    {% for product in best_products %}
+    <div class="col-md-4 mb-4 d-flex">
+        <div class="card p-3 shadow h-100">
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 class="img-fluid mb-2 w-100"
+                 style="height:200px; object-fit:contain; background:#f8f9fa;">
+            {% endif %}
+
+            <h5>
+                <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+                    {{ product.name }}
+                </a>
+            </h5>
+
+            <p>Price: ₹{{ product.price }}</p>
+
+            <p>
+                Score:
+                <span class="badge bg-dark">
+                    {{ product.overall_score }}/100
+                </span>
+            </p>
+
+            {% if product.verdict == "Best Overall" %}
+                <span class="badge bg-success">{{ product.verdict }}</span>
+            {% elif product.verdict == "Excellent Choice" %}
+                <span class="badge bg-primary">{{ product.verdict }}</span>
+            {% elif product.verdict == "Good Option" %}
+                <span class="badge bg-warning text-dark">{{ product.verdict }}</span>
+            {% else %}
+                <span class="badge bg-danger">{{ product.verdict }}</span>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
