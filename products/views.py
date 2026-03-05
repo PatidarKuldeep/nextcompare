@@ -32,7 +32,7 @@ def product_detail(request, slug):
 
 def category_view(request, category_name):
     products = Product.objects.filter(
-        category__name__iexact=category_name
+        category__name__icontains=category_name
     ).order_by("-created_at")
 
 
