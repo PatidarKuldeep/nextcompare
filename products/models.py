@@ -61,7 +61,7 @@ class Product(models.Model):
     def calculate_score(self):
         score = 0
 
-        if self.category.name.lower() == "mobile" and hasattr(self, "mobilespecs"):
+        if "mobile" in self.category.name.lower() and hasattr(self, "mobilespecs"):
             spec = self.mobilespecs
 
             if spec.ram >= 8:
@@ -81,7 +81,7 @@ class Product(models.Model):
             if spec.display_type.lower() == "amoled":
                 score += 15
 
-        elif self.category.name.lower() == "laptop" and hasattr(self, "laptopspecs"):
+        elif "laptop" in self.category.name.lower() and hasattr(self, "laptopspecs"):
             spec = self.laptopspecs
 
             if spec.ram >= 16:
