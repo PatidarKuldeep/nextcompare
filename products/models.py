@@ -129,6 +129,10 @@ class MobileSpecs(models.Model):
     processor_score = models.IntegerField()
     display_type = models.CharField(max_length=50)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.product.save()
+
     def __str__(self):
         return f"Specs for {self.product.name}"
 
@@ -144,6 +148,10 @@ class LaptopSpecs(models.Model):
     processor_score = models.IntegerField()
     gpu = models.BooleanField(default=False)
     battery_backup = models.IntegerField()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.product.save()
 
     def __str__(self):
         return f"Specs for {self.product.name}"
