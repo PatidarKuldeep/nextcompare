@@ -131,15 +131,14 @@ class MobileSpecs(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        Product.objects.filter(id=self.product.id).update(
-            overall_score=self.product.calculate_score(),
-            verdict=self.product.generate_verdict()
-        )
+
+        # update product score
+        self.product.overall_score = self.product.calculate_score()
+        self.product.verdict = self.product.generate_verdict()
+        self.product.save(update_fields=["overall_score", "verdict"])
 
     def __str__(self):
         return f"Specs for {self.product.name}"
-
-
 # -------------------
 # Laptop Specs
 # -------------------
@@ -154,10 +153,10 @@ class LaptopSpecs(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        Product.objects.filter(id=self.product.id).update(
-            overall_score=self.product.calculate_score(),
-            verdict=self.product.generate_verdict()
-        )
+        # update product score
+        self.product.overall_score = self.product.calculate_score()
+        self.product.verdict = self.product.generate_verdict()
+        self.product.save(update_fields=["overall_score", "verdict"])
 
     def __str__(self):
         return f"Specs for {self.product.name}"
