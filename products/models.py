@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.db.models import F
 
 
 # -------------------
@@ -131,13 +132,13 @@ class MobileSpecs(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-
-        # Recalculate product score
         product = self.product
-        product.overall_score = product.calculate_score()
-        product.verdict = product.generate_verdict()
-        product.save(update_fields=["overall_score", "verdict"])
-
+        score = product.calculate_score()
+        verdict = product.generate_verdict()
+        Product.objects.filter(id=product.id).update(
+            overall_score=score,
+            verdict=verdict
+            )
     def __str__(self):
         return f"Specs for {self.product.name}"
 # -------------------
@@ -154,12 +155,13 @@ class LaptopSpecs(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        # Recalculate product score
         product = self.product
-        product.overall_score = product.calculate_score()
-        product.verdict = product.generate_verdict()
-        product.save(update_fields=["overall_score", "verdict"])
-
+        score = product.calculate_score()
+        verdict = product.generate_verdict()
+        Product.objects.filter(id=product.id).update(
+            overall_score=score,
+            verdict=verdict
+            )
 
     def __str__(self):
         return f"Specs for {self.product.name}"
