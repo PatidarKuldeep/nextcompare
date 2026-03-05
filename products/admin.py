@@ -18,12 +18,12 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
     def get_inlines(self, request, obj=None):
-    if obj:
-        if "mobile" in obj.category.name.lower():
-            return [MobileSpecsInline]
-        elif "laptop" in obj.category.name.lower():
-            return [LaptopSpecsInline]
-    return []
+        if obj:
+            if "mobile" in obj.category.name.lower():
+                return [MobileSpecsInline]
+            elif "laptop" in obj.category.name.lower():
+                return [LaptopSpecsInline]
+        return []
 
 admin.site.register(Category)
 admin.site.register(Brand)
