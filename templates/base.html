@@ -30,7 +30,7 @@
     {% endif %}
 </head>
 <body>
-
+{% if not '/admin' in request.path %}
 <!-- 🔷 NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0d1b2a;">
         <div class="container">
@@ -55,6 +55,6 @@
 <footer class="bg-dark text-light text-center mt-5 p-3">
     © 2026 TechCompare | Built with Django
 </footer>
-
+{% endif %}
 </body>
 </html>
