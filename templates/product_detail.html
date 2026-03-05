@@ -39,6 +39,47 @@
 {% endif %}
 <hr>
 
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+
+<a href="/" class="btn btn-secondary mb-4">⬅ Back</a>
+
+<h1>{{ product.name }}</h1>
+
+{% if product.image %}
+    <img src="{{ product.image.url }}"
+         class="img-fluid mb-3"
+         style="max-height:300px;">
+{% endif %}
+
+<p><strong>Brand:</strong> {{ product.brand }}</p>
+<p><strong>Category:</strong> {{ product.category }}</p>
+<p><strong>Price:</strong> ₹{{ product.price }}</p>
+<p><strong>Launch Date:</strong> {{ product.launch_date }}</p>
+
+<hr>
+
+<h4>
+    Score:
+    <span class="badge bg-dark">
+        {{ product.overall_score }}/100
+    </span>
+</h4>
+
+{% if product.verdict == "Best Overall" %}
+    <span class="badge bg-success fs-6">{{ product.verdict }}</span>
+{% elif product.verdict == "Excellent Choice" %}
+    <span class="badge bg-primary fs-6">{{ product.verdict }}</span>
+{% elif product.verdict == "Good Option" %}
+    <span class="badge bg-warning text-dark fs-6">{{ product.verdict }}</span>
+{% else %}
+    <span class="badge bg-danger fs-6">{{ product.verdict }}</span>
+{% endif %}
+<hr>
+
 <h4>Specifications</h4>
 
 {% if product.category.name == "Mobile" %}
@@ -55,6 +96,15 @@
     <p>GPU: {{ product.laptopspecs.gpu }}</p>
     <p>Battery Backup: {{ product.laptopspecs.battery_backup }} Hours</p>
 {% endif %}
+
+{% if product.affiliate_link %}
+    <a href="{{ product.affiliate_link }}" target="_blank" class="btn btn-primary mt-3">
+        Buy Now
+    </a>
+{% endif %}
+
+
+{% endblock %}
 
 {% if product.affiliate_link %}
     <a href="{{ product.affiliate_link }}" target="_blank" class="btn btn-primary mt-3">
