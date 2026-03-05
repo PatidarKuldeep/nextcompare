@@ -33,7 +33,8 @@ def product_detail(request, slug):
 def category_view(request, category_name):
     products = Product.objects.filter(
         category__name__iexact=category_name
-    )
+    ).order_by("-created_at")
+
 
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
@@ -51,7 +52,10 @@ def category_view(request, category_name):
         'category_name': category_name,
     }
 
-    return render(request, 'category.html', context)
+    return render(request, 'category.html', {
+        "products": products,
+        "category_name": category_name
+    })
 
 def compare_products(request):
     product_ids = request.GET.getlist('compare')
