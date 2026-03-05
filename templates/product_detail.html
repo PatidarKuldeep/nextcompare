@@ -21,12 +21,14 @@
 
 <hr>
 
-<h4>
-Score:
-<span class="badge bg-dark">
-{{ product.overall_score }}/100
-</span>
-</h4>
+<h4>Score</h4>
+<div class="progress mb-3">
+    <div class="progress-bar bg-success"
+         role="progressbar"
+         style="width: {{ product.overall_score }}%;">
+         {{ product.overall_score }}/100
+    </div>
+</div>
 
 {% if product.verdict == "Best Overall" %}
 <span class="badge bg-success fs-6">{{ product.verdict }}</span>
@@ -43,19 +45,70 @@ Score:
 <h4>Specifications</h4>
 
 {% if product.mobilespecs %}
-<p>RAM: {{ product.mobilespecs.ram }} GB</p>
-<p>Storage: {{ product.mobilespecs.storage }} GB</p>
-<p>Battery: {{ product.mobilespecs.battery }} mAh</p>
-<p>Camera: {{ product.mobilespecs.camera }} MP</p>
-<p>Processor Score: {{ product.mobilespecs.processor_score }}</p>
-<p>Display: {{ product.mobilespecs.display_type }}</p>
+<table class="table table-striped">
+<tr>
+<th>RAM</th>
+<td>{{ product.mobilespecs.ram }} GB</td>
+</tr>
+
+<tr>
+<th>Storage</th>
+<td>{{ product.mobilespecs.storage }} GB</td>
+</tr>
+
+<tr>
+<th>Battery</th>
+<td>{{ product.mobilespecs.battery }} mAh</td>
+</tr>
+
+<tr>
+<th>Camera</th>
+<td>{{ product.mobilespecs.camera }} MP</td>
+</tr>
+
+<tr>
+<th>Processor Score</th>
+<td>{{ product.mobilespecs.processor_score }}</td>
+</tr>
+
+<tr>
+<th>Display</th>
+<td>{{ product.mobilespecs.display_type }}</td>
+</tr>
+</table>
+
+
 
 {% elif product.laptopspecs %}
-<p>RAM: {{ product.laptopspecs.ram }} GB</p>
-<p>Storage: {{ product.laptopspecs.storage }} GB</p>
-<p>Processor Score: {{ product.laptopspecs.processor_score }}</p>
-<p>GPU: {{ product.laptopspecs.gpu }}</p>
-<p>Battery Backup: {{ product.laptopspecs.battery_backup }} Hours</p>
+<table class="table table-striped">
+
+<tr>
+<th>RAM</th>
+<td>{{ product.laptopspecs.ram }} GB</td>
+</tr>
+
+<tr>
+<th>Storage</th>
+<td>{{ product.laptopspecs.storage }} GB</td>
+</tr>
+
+<tr>
+<th>Processor Score</th>
+<td>{{ product.laptopspecs.processor_score }}</td>
+</tr>
+
+<tr>
+<th>GPU</th>
+<td>{{ product.laptopspecs.gpu }}</td>
+</tr>
+
+<tr>
+<th>Battery Backup</th>
+<td>{{ product.laptopspecs.battery_backup }} Hours</td>
+</tr>
+
+</table>
+
 {% endif %}
 
 {% if product.affiliate_link %}
