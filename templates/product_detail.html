@@ -95,8 +95,11 @@
 </tr>
 
 <tr>
-<th>Processor Score</th>
-<td>{{ product.mobilespecs.processor_score }}</td>
+    <td>Processor</td>
+    <td>
+        {{ product.mobilespecs.processor.name }}
+        (Score: {{ product.mobilespecs.processor.benchmark_score }})
+    </td>
 </tr>
 
 <tr>
@@ -121,8 +124,11 @@
 </tr>
 
 <tr>
-<th>Processor Score</th>
-<td>{{ product.laptopspecs.processor_score }}</td>
+    <td>Processor</td>
+    <td>
+        {{ product.laptopspecs.processor.name }}
+        (Score: {{ product.laptopspecs.processor.benchmark_score }})
+    </td>
 </tr>
 
 <tr>
