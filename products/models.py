@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models import F
+from products.utils.scoring import calculate_mobile_score, calculate_laptop_score
 
 
 # -------------------
@@ -57,63 +58,13 @@ class Product(models.Model):
         self.verdict = self.generate_verdict()
 
         super().save(*args, **kwargs)
-
+        
     def calculate_score(self):
-        score = 0
-
-        if "mobile" in self.category.name.lower() and hasattr(self, "mobilespecs"):
-            spec = self.mobilespecs
-
-            if spec.ram >= 8:
-                score += 20
-            elif spec.ram >= 6:
-                score += 15
-
-            if spec.battery >= 5000:
-                score += 20
-
-            if spec.processor:
-                processor_score = spec.processor.benchmark_score
-                if processor_score >= 5000:
-                    score += 25
-                elif processor_score >= 4000:
-                    score += 20
-                elif processor_score >= 3000:
-                    score += 15
-
-            if spec.camera >= 64:
-                score += 20
-
-            if spec.display_type.lower() == "amoled":
-                score += 15
-
-        elif "laptop" in self.category.name.lower() and hasattr(self, "laptopspecs"):
-            spec = self.laptopspecs
-
-            if spec.ram >= 16:
-                score += 25
-            elif spec.ram >= 8:
-                score += 20
-
-            if spec.processor:
-                processor_score = spec.processor.benchmark_score
-                if processor_score >= 12000:
-                    score += 30
-                elif processor_score >= 9000:
-                    score += 25
-                elif processor_score >= 7000:
-                    score += 20
-
-            if spec.storage >= 512:
-                score += 15
-
-            if spec.gpu:
-                score += 20
-
-            if spec.battery_backup >= 6:
-                score += 10
-
-        return score
+        if hasattr(self, "mobilespecs"):
+            return calculate_mobile_score(self.mobilespecs)
+        if hasattr(self, "laptopspecs"):
+            return calculate_laptop_score(self.laptopspecs)
+        return 0
 
     def generate_verdict(self):
         if self.overall_score >= 85:
@@ -190,8 +141,18 @@ class LaptopSpecs(models.Model):
 
 
 class Processor(models.Model):
+
     name = models.CharField(max_length=100)
-    benchmark_score = models.IntegerField()
+
+    brand = models.CharField(max_length=50, blank=True)
+
+    antutu_score = models.IntegerField(null=True, blank=True)
+
+    geekbench_single = models.IntegerField(null=True, blank=True)
+
+    geekbench_multi = models.IntegerField(null=True, blank=True)
+
+    benchmark_score = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
