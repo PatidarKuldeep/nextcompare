@@ -136,17 +136,26 @@
 
 
 <h4 class="text-center mt-4">
-
 🏆 Winner:
 
 {% if p1.overall_score > p2.overall_score %}
-{{ p1.name }}
+    {{ p1.name }}
 
 {% elif p2.overall_score > p1.overall_score %}
-{{ p2.name }}
+    {{ p2.name }}
 
 {% else %}
-It's a Tie!
+
+    {% if p1.price < p2.price %}
+        {{ p1.name }}
+
+    {% elif p2.price < p1.price %}
+        {{ p2.name }}
+
+    {% else %}
+        It's a Tie!
+    {% endif %}
+
 {% endif %}
 
 </h4>
