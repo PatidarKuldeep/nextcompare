@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Category, Brand, Product, MobileSpecs, LaptopSpecs
+from .models import Processor
 
 
 class MobileSpecsInline(admin.StackedInline):
@@ -27,3 +28,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(Brand)
+admin.site.register(Processor)

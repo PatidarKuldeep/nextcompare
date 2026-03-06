@@ -72,8 +72,14 @@ class Product(models.Model):
             if spec.battery >= 5000:
                 score += 20
 
-            if spec.processor_score >= 800:
-                score += 25
+            if spec.processor:
+                processor_score = spec.processor.benchmark_score
+                if processor_score >= 5000:
+                    score += 25
+                elif processor_score >= 4000:
+                    score += 20
+                elif processor_score >= 3000:
+                    score += 15
 
             if spec.camera >= 64:
                 score += 20
@@ -89,8 +95,14 @@ class Product(models.Model):
             elif spec.ram >= 8:
                 score += 20
 
-            if spec.processor_score >= 1000:
-                score += 30
+            if spec.processor:
+                processor_score = spec.processor.benchmark_score
+                if processor_score >= 12000:
+                    score += 30
+                elif processor_score >= 9000:
+                    score += 25
+                elif processor_score >= 7000:
+                    score += 20
 
             if spec.storage >= 512:
                 score += 15
@@ -127,7 +139,12 @@ class MobileSpecs(models.Model):
     storage = models.IntegerField()
     battery = models.IntegerField()
     camera = models.IntegerField()
-    processor_score = models.IntegerField()
+    processor = models.ForeignKey(
+        "Processor",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     display_type = models.CharField(max_length=50)
 
     def save(self, *args, **kwargs):
@@ -149,7 +166,12 @@ class LaptopSpecs(models.Model):
 
     ram = models.IntegerField()
     storage = models.IntegerField()
-    processor_score = models.IntegerField()
+    processor = models.ForeignKey(
+        "Processor",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     gpu = models.BooleanField(default=False)
     battery_backup = models.IntegerField()
 
@@ -165,3 +187,11 @@ class LaptopSpecs(models.Model):
 
     def __str__(self):
         return f"Specs for {self.product.name}"
+
+
+class Processor(models.Model):
+    name = models.CharField(max_length=100)
+    benchmark_score = models.IntegerField()
+
+    def __str__(self):
+        return self.name
