@@ -4,58 +4,81 @@
 
 {% block content %}
 
-<h2>{{ category_name }} List</h2>
+<h2 class="mb-4">{{ category_name }} List</h2>
 
 <form method="get" action="{% url 'compare_products' %}">
 
 <div class="row">
+
     {% for product in products %}
+
     <div class="col-md-4 mb-4">
-        <div class="card p-3 shadow">
+
+        <div class="card p-3 shadow h-100">
 
             {% if product.image %}
-                <img src="{{ product.image.url }}"
-                     class="img-fluid mb-2 w-100"
-                     style="height:200px; object-fit:contain; background:#f8f9fa;">
+            <img src="{{ product.image.url }}"
+                 class="img-fluid mb-2 w-100"
+                 style="height:200px; object-fit:contain; background:#f8f9fa;">
             {% endif %}
 
             <h5>
-                <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+                <a href="{% url 'product_detail' product.slug %}"
+                   class="text-decoration-none">
                     {{ product.name }}
                 </a>
             </h5>
 
-            <p>Price: ₹{{ product.price }}</p>
-            <p>Score: {{ product.overall_score }}</p>
+            <p class="mb-1"><strong>Price:</strong> ₹{{ product.price }}</p>
+
+            <p class="mb-1">
+                <strong>Score:</strong> {{ product.overall_score }}/100
+            </p>
+
             {% if product.verdict == "Best Overall" %}
             <span class="badge bg-success">{{ product.verdict }}</span>
+
             {% elif product.verdict == "Excellent Choice" %}
             <span class="badge bg-primary">{{ product.verdict }}</span>
+
             {% elif product.verdict == "Good Option" %}
             <span class="badge bg-warning text-dark">{{ product.verdict }}</span>
+
             {% else %}
             <span class="badge bg-danger">{{ product.verdict }}</span>
             {% endif %}
-            <div class="form-check">
+
+            <!-- Compare Checkbox -->
+            <div class="form-check mt-3">
                 <input class="form-check-input"
                        type="checkbox"
                        name="compare"
                        value="{{ product.id }}">
+
                 <label class="form-check-label">
-                    Select to Compare
+                    Add to Compare
                 </label>
             </div>
 
         </div>
+
     </div>
+
     {% endfor %}
+
 </div>
 
-<div class="text-center mt-3">
-    <button type="submit" class="btn btn-dark">
+
+{% if products %}
+<div class="text-center mt-4">
+
+    <button type="submit"
+            class="btn btn-dark btn-lg">
         Compare Selected
     </button>
+
 </div>
+{% endif %}
 
 </form>
 
