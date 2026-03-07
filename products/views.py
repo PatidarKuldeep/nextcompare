@@ -37,7 +37,9 @@ def category_view(request, category_name):
 
     products = Product.objects.filter(category__name__iexact=category_name)
 
-    # Filters
+    print("CATEGORY:", category_name)
+    print("PRODUCT COUNT:", products.count())
+
     min_price = request.GET.get("min_price")
     max_price = request.GET.get("max_price")
     ram = request.GET.get("ram")
@@ -48,8 +50,8 @@ def category_view(request, category_name):
     if max_price:
         products = products.filter(price__lte=max_price)
 
-    if ram:
-        products = products.filter(mobilespecs__ram=ram)
+    if ram and category_name.lower() == "mobile":
+        products = products.filter(mobilespecs__ram=int(ram))
 
     context = {
         "products": products,
@@ -58,7 +60,7 @@ def category_view(request, category_name):
 
     return render(request, "category.html", context)
 
-    
+
 def compare_products(request):
     product_ids = request.GET.getlist('compare')
 
