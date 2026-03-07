@@ -6,6 +6,7 @@ from django.http import JsonResponse
 
 
 def home(request):
+
     recent_date = date.today() - timedelta(days=30)
 
     recent_products = Product.objects.filter(
@@ -14,9 +15,14 @@ def home(request):
 
     best_products = Product.objects.order_by('-overall_score')[:6]
 
+    trending_products = Product.objects.filter(
+        is_trending=True
+    ).order_by('-overall_score')[:6]
+
     context = {
         'recent_products': recent_products,
         'best_products': best_products,
+        'trending_products': trending_products,
     }
 
     return render(request, 'home.html', context)
