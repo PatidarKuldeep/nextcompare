@@ -3,6 +3,8 @@ from .models import Product
 from datetime import date, timedelta
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.http import JsonResponse
+
 
 
 
@@ -88,3 +90,23 @@ def search(request):
     }
 
     return render(request, "search.html", context)
+
+def search_suggestions(request):
+
+    query = request.GET.get("q", "")
+
+    results = []
+
+    if query:
+        products = Product.objects.filter(
+            Q(name__icontains=query) |
+            Q(brand__name__icontains=query)
+        )[:5]
+
+        for p in products:
+            results.append({
+                "name": p.name,
+                "slug": p.slug
+            })
+
+    return JsonResponse({"results": results})
