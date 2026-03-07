@@ -50,7 +50,7 @@ def category_view(request, category_name):
     if max_price:
         products = products.filter(price__lte=max_price)
 
-    if ram and category_name.lower() == "mobile":
+    if ram and category_name.lower() == "mobiles":
         products = products.filter(mobilespecs__ram=int(ram))
 
     context = {
