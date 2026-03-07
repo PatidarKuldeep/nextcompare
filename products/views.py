@@ -205,33 +205,57 @@ def compare_slug(request, slug1, slug2):
 
 def popular_comparisons(request):
 
-    products = Product.objects.order_by("-overall_score")[:10]
+    mobile_products = Product.objects.filter(
+        category__name__iexact="Mobiles"
+    ).order_by("-overall_score")[:10]
 
-    comparisons = []
+    laptop_products = Product.objects.filter(
+        category__name__iexact="Laptops"
+    ).order_by("-overall_score")[:10]
 
-    for i in range(len(products)):
-        for j in range(i+1, len(products)):
+    mobile_comparisons = []
+    laptop_comparisons = []
 
-            p1 = products[i]
-            p2 = products[j]
+    # Mobile comparisons
+    for i in range(len(mobile_products)):
+        for j in range(i + 1, len(mobile_products)):
 
-            comparisons.append({
-                "p1": p1,
-                "p2": p2
+            mobile_comparisons.append({
+                "p1": mobile_products[i],
+                "p2": mobile_products[j]
             })
 
-            if len(comparisons) >= 10:
+            if len(mobile_comparisons) >= 10:
                 break
 
-        if len(comparisons) >= 10:
+        if len(mobile_comparisons) >= 10:
             break
 
+
+    # Laptop comparisons
+    for i in range(len(laptop_products)):
+        for j in range(i + 1, len(laptop_products)):
+
+            laptop_comparisons.append({
+                "p1": laptop_products[i],
+                "p2": laptop_products[j]
+            })
+
+            if len(laptop_comparisons) >= 10:
+                break
+
+        if len(laptop_comparisons) >= 10:
+            break
+
+
     context = {
-        "comparisons": comparisons
+        "mobile_comparisons": mobile_comparisons,
+        "laptop_comparisons": laptop_comparisons,
     }
 
     return render(request, "popular_comparisons.html", context)
 
+    
 def brand_page(request, brand_name):
 
     brand_products = Product.objects.filter(

@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Popular Phone Comparisons{% endblock %}
+{% block title %}Popular Comparisons | TechCompare{% endblock %}
 
 {% block content %}
 
-<h1 class="mb-4">Popular Comparisons</h1>
+<h1 class="mb-5">Popular Comparisons</h1>
+
+
+<h3 class="mb-4">🔥 Popular Mobile Comparisons</h3>
 
 <div class="row">
 
-{% for c in comparisons %}
+{% for c in mobile_comparisons %}
 
 <div class="col-md-4 mb-3">
 
@@ -36,5 +39,45 @@ class="text-decoration-none">
 {% endfor %}
 
 </div>
+
+
+
+<hr class="mt-5 mb-5">
+
+
+
+<h3 class="mb-4">💻 Popular Laptop Comparisons</h3>
+
+<div class="row">
+
+{% for c in laptop_comparisons %}
+
+<div class="col-md-4 mb-3">
+
+<div class="card p-3 text-center shadow-sm">
+
+<a href="/compare/{{ c.p1.slug }}-vs-{{ c.p2.slug }}/"
+class="text-decoration-none">
+
+<strong>{{ c.p1.name }}</strong>
+
+<br>
+
+<span class="text-muted">vs</span>
+
+<br>
+
+<strong>{{ c.p2.name }}</strong>
+
+</a>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
 
 {% endblock %}
