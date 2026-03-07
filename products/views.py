@@ -189,3 +189,16 @@ def best_products(request, category_name, price):
     }
 
     return render(request, "best_products.html", context)
+
+def compare_slug(request, slug1, slug2):
+
+    p1 = get_object_or_404(Product, slug=slug1)
+    p2 = get_object_or_404(Product, slug=slug2)
+
+    products = [p1, p2]
+
+    context = {
+        "products": products
+    }
+
+    return render(request, "compare.html", context)

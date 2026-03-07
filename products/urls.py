@@ -12,4 +12,9 @@ urlpatterns = [
     "best/<str:category_name>/<int:price>/",
     views.best_products,
     name="best_products"),
+    path(
+    "compare/<slug:slug1>-vs-<slug:slug2>/",
+    views.compare_slug,
+    name="compare_slug"
+)
 ]
