@@ -23,13 +23,20 @@ def home(request):
 
 
 def product_detail(request, slug):
+
     product = get_object_or_404(Product, slug=slug)
 
+    # Similar products (same category)
+    similar_products = Product.objects.filter(
+        category=product.category
+    ).exclude(id=product.id).order_by("-overall_score")[:4]
+
     context = {
-        'product': product,
+        "product": product,
+        "similar_products": similar_products,
     }
 
-    return render(request, 'product_detail.html', context)
+    return render(request, "product_detail.html", context)
 
 
 def category_view(request, category_name):
