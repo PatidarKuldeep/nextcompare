@@ -34,13 +34,13 @@ def product_detail(request, slug):
     return render(request, 'product_detail.html', context)
 
 def category_view(request, category_name):
-    products = Product.objects.filter(
-        category__name__icontains=category_name
-    ).order_by("-created_at")
 
+    products = Product.objects.filter(category__name__iexact=category_name)
 
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
+    # Filters
+    min_price = request.GET.get("min_price")
+    max_price = request.GET.get("max_price")
+    ram = request.GET.get("ram")
 
     if min_price:
         products = products.filter(price__gte=min_price)
@@ -48,18 +48,17 @@ def category_view(request, category_name):
     if max_price:
         products = products.filter(price__lte=max_price)
 
-    products = products.order_by('-overall_score')
+    if ram:
+        products = products.filter(mobilespecs__ram=ram)
 
     context = {
-        'products': products,
-        'category_name': category_name,
-    }
-
-    return render(request, 'category.html', {
         "products": products,
         "category_name": category_name
-    })
+    }
 
+    return render(request, "category.html", context)
+
+    
 def compare_products(request):
     product_ids = request.GET.getlist('compare')
 
