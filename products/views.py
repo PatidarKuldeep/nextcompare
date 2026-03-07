@@ -1,11 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Product
 from datetime import date, timedelta
-from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import JsonResponse
-
-
 
 
 def home(request):
@@ -24,6 +21,7 @@ def home(request):
 
     return render(request, 'home.html', context)
 
+
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
 
@@ -33,16 +31,14 @@ def product_detail(request, slug):
 
     return render(request, 'product_detail.html', context)
 
+
 def category_view(request, category_name):
 
     products = Product.objects.filter(category__name__iexact=category_name)
 
-    print("CATEGORY:", category_name)
-    print("PRODUCT COUNT:", products.count())
-
+    # Common Filters
     min_price = request.GET.get("min_price")
     max_price = request.GET.get("max_price")
-    ram = request.GET.get("ram")
 
     if min_price:
         products = products.filter(price__gte=min_price)
@@ -50,8 +46,45 @@ def category_view(request, category_name):
     if max_price:
         products = products.filter(price__lte=max_price)
 
-    if ram and category_name.lower() == "mobiles":
-        products = products.filter(mobilespecs__ram=int(ram))
+    # Mobile Filters
+    ram = request.GET.get("ram")
+    storage = request.GET.get("storage")
+    battery = request.GET.get("battery")
+
+    if category_name.lower() == "mobiles":
+
+        if ram:
+            try:
+                products = products.filter(mobilespecs__ram=int(ram))
+            except:
+                pass
+
+        if storage:
+            try:
+                products = products.filter(mobilespecs__storage=int(storage))
+            except:
+                pass
+
+        if battery:
+            try:
+                products = products.filter(mobilespecs__battery__gte=int(battery))
+            except:
+                pass
+
+    # Laptop Filters
+    if category_name.lower() == "laptops":
+
+        if ram:
+            try:
+                products = products.filter(laptopspecs__ram=int(ram))
+            except:
+                pass
+
+        if storage:
+            try:
+                products = products.filter(laptopspecs__storage=int(storage))
+            except:
+                pass
 
     context = {
         "products": products,
@@ -91,6 +124,7 @@ def search(request):
     }
 
     return render(request, "search.html", context)
+
 
 def search_suggestions(request):
 
