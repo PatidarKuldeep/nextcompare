@@ -40,10 +40,13 @@
 
         {% if product.verdict == "Best Overall" %}
         <span class="badge bg-success fs-6">{{ product.verdict }}</span>
+
         {% elif product.verdict == "Excellent Choice" %}
         <span class="badge bg-primary fs-6">{{ product.verdict }}</span>
+
         {% elif product.verdict == "Good Option" %}
         <span class="badge bg-warning text-dark fs-6">{{ product.verdict }}</span>
+
         {% else %}
         <span class="badge bg-danger fs-6">{{ product.verdict }}</span>
         {% endif %}
@@ -64,11 +67,95 @@
 
 <hr>
 
-<h3>Specifications</h3>
+
+<!-- SPECIFICATION TABS -->
+
+<ul class="nav nav-tabs mt-4">
+
+<li class="nav-item">
+<button class="nav-link active"
+data-bs-toggle="tab"
+data-bs-target="#general">
+General
+</button>
+</li>
+
+<li class="nav-item">
+<button class="nav-link"
+data-bs-toggle="tab"
+data-bs-target="#performance">
+Performance
+</button>
+</li>
+
+<li class="nav-item">
+<button class="nav-link"
+data-bs-toggle="tab"
+data-bs-target="#camera">
+Camera
+</button>
+</li>
+
+<li class="nav-item">
+<button class="nav-link"
+data-bs-toggle="tab"
+data-bs-target="#battery">
+Battery
+</button>
+</li>
+
+</ul>
+
+
+<div class="tab-content mt-3">
+
+
+<!-- GENERAL TAB -->
+
+<div class="tab-pane fade show active" id="general">
+
+<table class="table table-striped">
+
+<tr>
+<th>Brand</th>
+<td>{{ product.brand }}</td>
+</tr>
+
+<tr>
+<th>Category</th>
+<td>{{ product.category }}</td>
+</tr>
+
+<tr>
+<th>Launch Date</th>
+<td>{{ product.launch_date }}</td>
+</tr>
+
+<tr>
+<th>Price</th>
+<td>₹{{ product.price }}</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<!-- PERFORMANCE TAB -->
+
+<div class="tab-pane fade" id="performance">
+
+<table class="table table-striped">
 
 {% if product.mobilespecs %}
 
-<table class="table table-striped">
+<tr>
+<th>Processor</th>
+<td>
+{{ product.mobilespecs.processor.name }}
+(Score: {{ product.mobilespecs.processor.benchmark_score }})
+</td>
+</tr>
 
 <tr>
 <th>RAM</th>
@@ -81,37 +168,19 @@
 </tr>
 
 <tr>
-<th>Battery</th>
-<td>
-🔋 {{ product.mobilespecs.battery }} mAh
-</td>
-</tr>
-
-
-
-<tr>
-<th>Camera</th>
-<td>{{ product.mobilespecs.camera }} MP</td>
-</tr>
-
-<tr>
-    <td>Processor</td>
-    <td>
-        {{ product.mobilespecs.processor.name }}
-        (Score: {{ product.mobilespecs.processor.benchmark_score }})
-    </td>
-</tr>
-
-<tr>
 <th>Display</th>
 <td>{{ product.mobilespecs.display_type|upper }}</td>
 </tr>
 
-</table>
-
 {% elif product.laptopspecs %}
 
-<table class="table table-striped">
+<tr>
+<th>Processor</th>
+<td>
+{{ product.laptopspecs.processor.name }}
+(Score: {{ product.laptopspecs.processor.benchmark_score }})
+</td>
+</tr>
 
 <tr>
 <th>RAM</th>
@@ -124,25 +193,68 @@
 </tr>
 
 <tr>
-    <td>Processor</td>
-    <td>
-        {{ product.laptopspecs.processor.name }}
-        (Score: {{ product.laptopspecs.processor.benchmark_score }})
-    </td>
-</tr>
-
-<tr>
 <th>GPU</th>
 <td>{{ product.laptopspecs.gpu }}</td>
 </tr>
+
+{% endif %}
+
+</table>
+
+</div>
+
+
+<!-- CAMERA TAB -->
+
+<div class="tab-pane fade" id="camera">
+
+{% if product.mobilespecs %}
+
+<table class="table table-striped">
+
+<tr>
+<th>Main Camera</th>
+<td>{{ product.mobilespecs.camera }} MP</td>
+</tr>
+
+</table>
+
+{% else %}
+
+<p>No camera data available.</p>
+
+{% endif %}
+
+</div>
+
+
+<!-- BATTERY TAB -->
+
+<div class="tab-pane fade" id="battery">
+
+<table class="table table-striped">
+
+{% if product.mobilespecs %}
+
+<tr>
+<th>Battery</th>
+<td>🔋 {{ product.mobilespecs.battery }} mAh</td>
+</tr>
+
+{% elif product.laptopspecs %}
 
 <tr>
 <th>Battery Backup</th>
 <td>{{ product.laptopspecs.battery_backup }} Hours</td>
 </tr>
 
+{% endif %}
+
 </table>
 
-{% endif %}
+</div>
+
+
+</div>
 
 {% endblock %}
