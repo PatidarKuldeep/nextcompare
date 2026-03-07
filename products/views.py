@@ -255,7 +255,7 @@ def popular_comparisons(request):
 
     return render(request, "popular_comparisons.html", context)
 
-    
+
 def brand_page(request, brand_name):
 
     brand_products = Product.objects.filter(
@@ -268,3 +268,16 @@ def brand_page(request, brand_name):
     }
 
     return render(request, "brand_page.html", context)
+
+def top_products(request, category):
+
+    products = Product.objects.filter(
+        category__name__iexact=category
+    ).order_by("-overall_score")[:10]
+
+    context = {
+        "category": category,
+        "products": products
+    }
+
+    return render(request, "top_products.html", context)

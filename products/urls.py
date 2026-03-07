@@ -24,4 +24,8 @@ urlpatterns = [
         "brand/<slug:brand_name>/",
         views.brand_page,
         name="brand_page"),
+    path(
+        "top-<str:category>/",
+        views.top_products,
+        name="top_products"),
 ]
