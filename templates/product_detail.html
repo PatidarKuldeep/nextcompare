@@ -68,9 +68,7 @@
         <form action="{% url 'compare_products' %}" method="get" class="d-flex gap-2">
 
         <input type="hidden" name="compare" value="{{ product.id }}">
-
-        <select name="compare" class="form-select">
-
+        <select name="compare" class="form-select" required>
         <option value="">Select product</option>
 
         {% for p in compare_products %}
@@ -221,7 +219,13 @@ Battery
 
 <tr>
 <th>GPU</th>
-<td>{{ product.laptopspecs.gpu }}</td>
+<td>
+{% if product.laptopspecs.gpu %}
+Dedicated GPU
+{% else %}
+Integrated
+{% endif %}
+</td>
 </tr>
 
 {% endif %}
