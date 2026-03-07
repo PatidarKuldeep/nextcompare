@@ -8,4 +8,8 @@ urlpatterns = [
     path('compare/', views.compare_products, name='compare_products'),
     path("search/", views.search, name="search"),
     path("search-suggestions/", views.search_suggestions, name="search_suggestions"),
+    path(
+    "best/<str:category_name>/<int:price>/",
+    views.best_products,
+    name="best_products"),
 ]

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+Best {{ category_name }} Under {{ price }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2 class="mb-4">
+Best {{ category_name }} Under ₹{{ price }}
+</h2>
+
+<div class="row">
+
+{% for product in products %}
+
+<div class="col-md-4 mb-4">
+
+<div class="card p-3 shadow h-100">
+
+{% if product.image %}
+<img src="{{ product.image.url }}"
+class="img-fluid mb-2"
+style="height:200px; object-fit:contain;">
+{% endif %}
+
+<h5>
+
+<a href="{% url 'product_detail' product.slug %}">
+{{ product.name }}
+</a>
+
+</h5>
+
+<p><strong>Price:</strong> ₹{{ product.price }}</p>
+
+<p><strong>Score:</strong> {{ product.overall_score }}</p>
+
+<span class="badge bg-success">
+{{ product.verdict }}
+</span>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -150,3 +150,18 @@ def search_suggestions(request):
             })
 
     return JsonResponse({"results": results})
+
+def best_products(request, category_name, price):
+
+    products = Product.objects.filter(
+        category__name__iexact=category_name,
+        price__lte=price
+    ).order_by("-overall_score")[:10]
+
+    context = {
+        "products": products,
+        "category_name": category_name,
+        "price": price
+    }
+
+    return render(request, "best_products.html", context)
