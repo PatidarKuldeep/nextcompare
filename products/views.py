@@ -26,18 +26,26 @@ def product_detail(request, slug):
 
     product = get_object_or_404(Product, slug=slug)
 
+    # Similar products
     similar_products = Product.objects.filter(
         category=product.category
-    ).exclude(id=product.id)[:4]
+    ).exclude(id=product.id).order_by("-overall_score")[:4]
 
+    # Products for compare dropdown
     compare_products = Product.objects.filter(
         category=product.category
     ).exclude(id=product.id)[:20]
+
+    # Smart compare suggestions (top scoring)
+    compare_suggestions = Product.objects.filter(
+        category=product.category
+    ).exclude(id=product.id).order_by("-overall_score")[:3]
 
     context = {
         "product": product,
         "similar_products": similar_products,
         "compare_products": compare_products,
+        "compare_suggestions": compare_suggestions,
     }
 
     return render(request, "product_detail.html", context)

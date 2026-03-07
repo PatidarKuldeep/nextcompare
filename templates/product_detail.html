@@ -8,86 +8,93 @@
 
 <div class="row">
 
-    <!-- Product Image -->
-    <div class="col-md-4 text-center">
-        {% if product.image %}
-        <img src="{{ product.image.url }}"
-             class="img-fluid"
-             style="max-height:350px; object-fit:contain;">
-        {% endif %}
-    </div>
+<!-- Product Image -->
+<div class="col-md-4 text-center">
+{% if product.image %}
+<img src="{{ product.image.url }}"
+class="img-fluid"
+style="max-height:350px; object-fit:contain;">
+{% endif %}
+</div>
 
-    <!-- Product Info -->
-    <div class="col-md-8">
 
-        <h2>{{ product.name }}</h2>
+<!-- Product Info -->
+<div class="col-md-8">
 
-        <p><strong>Brand:</strong> {{ product.brand }}</p>
-        <p><strong>Category:</strong> {{ product.category }}</p>
-        <p><strong>Price:</strong> ₹{{ product.price }}</p>
-        <p><strong>Launch Date:</strong> {{ product.launch_date }}</p>
+<h2>{{ product.name }}</h2>
 
-        <h4 class="mt-3">Score</h4>
+<p><strong>Brand:</strong> {{ product.brand }}</p>
+<p><strong>Category:</strong> {{ product.category }}</p>
+<p><strong>Price:</strong> ₹{{ product.price }}</p>
+<p><strong>Launch Date:</strong> {{ product.launch_date }}</p>
 
-        <div class="progress mb-3">
-          <div class="progress-bar bg-success"
-               role="progressbar"
-               style="width: {{ product.overall_score }}%;">
-            {{ product.overall_score }}/100
-          </div>
-        </div>
 
-        {% if product.verdict == "Best Overall" %}
-        <span class="badge bg-success fs-6">{{ product.verdict }}</span>
+<h4 class="mt-3">Score</h4>
 
-        {% elif product.verdict == "Excellent Choice" %}
-        <span class="badge bg-primary fs-6">{{ product.verdict }}</span>
+<div class="progress mb-3">
+<div class="progress-bar bg-success"
+role="progressbar"
+style="width: {{ product.overall_score }}%;">
+{{ product.overall_score }}/100
+</div>
+</div>
 
-        {% elif product.verdict == "Good Option" %}
-        <span class="badge bg-warning text-dark fs-6">{{ product.verdict }}</span>
 
-        {% else %}
-        <span class="badge bg-danger fs-6">{{ product.verdict }}</span>
-        {% endif %}
+{% if product.verdict == "Best Overall" %}
+<span class="badge bg-success fs-6">{{ product.verdict }}</span>
 
-        {% if product.affiliate_link %}
-        <div class="mt-4">
-            <a href="{{ product.affiliate_link }}"
-               target="_blank"
-               class="btn btn-primary btn-lg">
-               Buy Now
-            </a>
-        </div>
-        {% endif %}
+{% elif product.verdict == "Excellent Choice" %}
+<span class="badge bg-primary fs-6">{{ product.verdict }}</span>
 
-        <!-- Compare With Section -->
-        <hr>
+{% elif product.verdict == "Good Option" %}
+<span class="badge bg-warning text-dark fs-6">{{ product.verdict }}</span>
 
-        <h4>Compare With</h4>
+{% else %}
+<span class="badge bg-danger fs-6">{{ product.verdict }}</span>
+{% endif %}
 
-        <form action="{% url 'compare_products' %}" method="get" class="d-flex gap-2">
 
-        <input type="hidden" name="compare" value="{{ product.id }}">
-        <select name="compare" class="form-select" required>
-        <option value="">Select product</option>
+{% if product.affiliate_link %}
+<div class="mt-4">
+<a href="{{ product.affiliate_link }}"
+target="_blank"
+class="btn btn-primary btn-lg">
+Buy Now
+</a>
+</div>
+{% endif %}
 
-        {% for p in compare_products %}
 
-        <option value="{{ p.id }}">
-        {{ p.name }}
-        </option>
+<!-- Compare With -->
+<hr>
 
-        {% endfor %}
+<h4>Compare With</h4>
 
-        </select>
+<form action="{% url 'compare_products' %}" method="get" class="d-flex gap-2">
 
-        <button class="btn btn-dark">
-        Compare
-        </button>
+<input type="hidden" name="compare" value="{{ product.id }}">
 
-        </form>
+<select name="compare" class="form-select" required>
 
-    </div>
+<option value="">Select product</option>
+
+{% for p in compare_products %}
+
+<option value="{{ p.id }}">
+{{ p.name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<button class="btn btn-dark">
+Compare
+</button>
+
+</form>
+
+</div>
 
 </div>
 
@@ -133,9 +140,11 @@ Battery
 </ul>
 
 
+
 <div class="tab-content mt-3">
 
-<!-- GENERAL TAB -->
+
+<!-- GENERAL -->
 
 <div class="tab-pane fade show active" id="general">
 
@@ -166,7 +175,8 @@ Battery
 </div>
 
 
-<!-- PERFORMANCE TAB -->
+
+<!-- PERFORMANCE -->
 
 <div class="tab-pane fade" id="performance">
 
@@ -235,7 +245,8 @@ Integrated
 </div>
 
 
-<!-- CAMERA TAB -->
+
+<!-- CAMERA -->
 
 <div class="tab-pane fade" id="camera">
 
@@ -259,7 +270,8 @@ Integrated
 </div>
 
 
-<!-- BATTERY TAB -->
+
+<!-- BATTERY -->
 
 <div class="tab-pane fade" id="battery">
 
@@ -321,6 +333,42 @@ class="text-decoration-none">
 <span class="badge bg-success">
 Score {{ p.overall_score }}
 </span>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+<hr>
+
+<h3 class="mt-5">Users also compare</h3>
+
+<div class="row">
+
+{% for p in compare_suggestions %}
+
+<div class="col-md-4 mb-3">
+
+<div class="card p-3 text-center shadow-sm">
+
+<a href="/compare/?compare={{ product.id }}&compare={{ p.id }}"
+class="text-decoration-none">
+
+<strong>{{ product.name }}</strong>
+
+<br>
+
+<span class="text-muted">vs</span>
+
+<br>
+
+<strong>{{ p.name }}</strong>
+
+</a>
 
 </div>
 
