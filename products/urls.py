@@ -9,15 +9,19 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("search-suggestions/", views.search_suggestions, name="search_suggestions"),
     path(
-    "best/<str:category_name>/<int:price>/",
-    views.best_products,
-    name="best_products"),
+        "best/<str:category_name>/<int:price>/",
+        views.best_products,
+        name="best_products"),
     path(
-    "compare/<slug:slug1>-vs-<slug:slug2>/",
-    views.compare_slug,
-    name="compare_slug"),
+        "compare/<slug:slug1>-vs-<slug:slug2>/",
+        views.compare_slug,
+        name="compare_slug"),
     path(
-    "popular-comparisons/",
-    views.popular_comparisons,
-    name="popular_comparisons"),
+        "popular-comparisons/",
+        views.popular_comparisons,
+        name="popular_comparisons"),
+    path(
+        "brand/<slug:brand_name>/",
+        views.brand_page,
+        name="brand_page"),
 ]

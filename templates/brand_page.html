@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ brand_name }} Products | TechCompare
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">{{ brand_name }} Products</h1>
+
+<div class="row">
+
+{% for product in products %}
+
+<div class="col-md-4 mb-4">
+
+<div class="card p-3 shadow h-100">
+
+{% if product.image %}
+<img src="{{ product.image.url }}"
+class="img-fluid mb-2"
+style="height:200px; object-fit:contain;">
+{% endif %}
+
+<h5>
+<a href="{% url 'product_detail' product.slug %}">
+{{ product.name }}
+</a>
+</h5>
+
+<p>Price: ₹{{ product.price }}</p>
+
+<p>
+Score:
+<span class="badge bg-dark">
+{{ product.overall_score }}/100
+</span>
+</p>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

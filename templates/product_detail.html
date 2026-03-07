@@ -23,7 +23,12 @@ style="max-height:350px; object-fit:contain;">
 
 <h2>{{ product.name }}</h2>
 
-<p><strong>Brand:</strong> {{ product.brand }}</p>
+<p>
+<strong>Brand:</strong>
+<a href="/brand/{{ product.brand.name|lower }}/">
+{{ product.brand }}
+</a>
+</p>
 <p><strong>Category:</strong> {{ product.category }}</p>
 <p><strong>Price:</strong> ₹{{ product.price }}</p>
 <p><strong>Launch Date:</strong> {{ product.launch_date }}</p>

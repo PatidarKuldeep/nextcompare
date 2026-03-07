@@ -231,3 +231,16 @@ def popular_comparisons(request):
     }
 
     return render(request, "popular_comparisons.html", context)
+
+def brand_page(request, brand_name):
+
+    brand_products = Product.objects.filter(
+        brand__name__iexact=brand_name
+    ).order_by("-overall_score")
+
+    context = {
+        "brand_name": brand_name,
+        "products": brand_products
+    }
+
+    return render(request, "brand_page.html", context)
