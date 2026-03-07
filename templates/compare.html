@@ -14,6 +14,8 @@
 
 {% with p1=products.0 p2=products.1 %}
 
+<div class="table-responsive">
+
 <table class="table table-bordered text-center align-middle">
 
 <tr>
@@ -28,13 +30,13 @@
 
 <td>
 {% if p1.image %}
-<img src="{{ p1.image.url }}" style="height:120px;">
+<img src="{{ p1.image.url }}" style="height:120px; object-fit:contain;">
 {% endif %}
 </td>
 
 <td>
 {% if p2.image %}
-<img src="{{ p2.image.url }}" style="height:120px;">
+<img src="{{ p2.image.url }}" style="height:120px; object-fit:contain;">
 {% endif %}
 </td>
 
@@ -66,12 +68,27 @@
 {{ p2.overall_score }}
 </td>
 
+</tr>
+
+
+<tr>
+<td>Verdict</td>
+
+<td>
+<span class="badge bg-success">
+{{ p1.verdict }}
+</span>
+</td>
+
+<td>
+<span class="badge bg-success">
+{{ p2.verdict }}
+</span>
+</td>
 
 </tr>
 
 
-
-</dd>
 {% if "mobile" in p1.category.name|lower %}
 
 <tr>
@@ -102,7 +119,6 @@
 </tr>
 
 
-
 <tr>
 <td>Battery</td>
 
@@ -130,31 +146,54 @@
 
 </tr>
 
+
+<tr>
+<td>Processor</td>
+
+<td>
+{{ p1.mobilespecs.processor.name }}
+</td>
+
+<td>
+{{ p2.mobilespecs.processor.name }}
+</td>
+
+</tr>
+
 {% endif %}
 
 </table>
 
+</div>
+
 
 <h4 class="text-center mt-4">
+
 🏆 Winner:
 
 {% if p1.overall_score > p2.overall_score %}
-    {{ p1.name }}
+
+{{ p1.name }}
 
 {% elif p2.overall_score > p1.overall_score %}
-    {{ p2.name }}
+
+{{ p2.name }}
 
 {% else %}
 
-    {% if p1.price < p2.price %}
-        {{ p1.name }}
+{% if p1.price < p2.price %}
 
-    {% elif p2.price < p1.price %}
-        {{ p2.name }}
+{{ p1.name }}
 
-    {% else %}
-        It's a Tie!
-    {% endif %}
+{% elif p2.price < p1.price %}
+
+{{ p2.name }}
+
+{% else %}
+
+It's a Tie!
+
+{% endif %}
 
 {% endif %}
 
@@ -173,5 +212,3 @@ Please select exactly 2 products to compare.
 </div>
 
 {% endblock %}
-
-

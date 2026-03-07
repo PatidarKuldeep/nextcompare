@@ -95,16 +95,21 @@ def category_view(request, category_name):
 
 
 def compare_products(request):
-    product_ids = request.GET.getlist('compare')
+
+    product_ids = request.GET.getlist("compare")
 
     products = Product.objects.filter(id__in=product_ids)
 
+    if len(products) < 2:
+        return render(request, "compare.html", {
+            "error": "Please select at least 2 products to compare."
+        })
+
     context = {
-        'products': products,
+        "products": products
     }
 
-    return render(request, 'compare.html', context)
-
+    return render(request, "compare.html", context)
 
 def search(request):
 
