@@ -15,6 +15,9 @@ urlpatterns = [
     path(
     "compare/<slug:slug1>-vs-<slug:slug2>/",
     views.compare_slug,
-    name="compare_slug"
-)
+    name="compare_slug"),
+    path(
+    "popular-comparisons/",
+    views.popular_comparisons,
+    name="popular_comparisons"),
 ]

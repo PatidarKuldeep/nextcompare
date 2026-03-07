@@ -202,3 +202,32 @@ def compare_slug(request, slug1, slug2):
     }
 
     return render(request, "compare.html", context)
+
+def popular_comparisons(request):
+
+    products = Product.objects.order_by("-overall_score")[:10]
+
+    comparisons = []
+
+    for i in range(len(products)):
+        for j in range(i+1, len(products)):
+
+            p1 = products[i]
+            p2 = products[j]
+
+            comparisons.append({
+                "p1": p1,
+                "p2": p2
+            })
+
+            if len(comparisons) >= 10:
+                break
+
+        if len(comparisons) >= 10:
+            break
+
+    context = {
+        "comparisons": comparisons
+    }
+
+    return render(request, "popular_comparisons.html", context)
