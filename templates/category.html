@@ -108,7 +108,7 @@ class="text-decoration-none">
 {% endif %}
 
 <div class="form-check mt-3">
-<input class="form-check-input"
+<input class="form-check-input compare-checkbox"
 type="checkbox"
 name="compare"
 value="{{ product.id }}">
@@ -144,4 +144,91 @@ Compare Selected
 
 </form>
 
+<div id="compare-bar" 
+style="
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#111;
+color:white;
+padding:15px;
+display:none;
+z-index:9999;
+">
+
+<div class="container d-flex justify-content-between">
+
+<span id="compare-count">
+0 products selected
+</span>
+
+<button id="compare-btn"
+class="btn btn-warning">
+Compare Now
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const checkboxes = document.querySelectorAll(".compare-checkbox")
+const bar = document.getElementById("compare-bar")
+const countText = document.getElementById("compare-count")
+const compareBtn = document.getElementById("compare-btn")
+
+function updateCompareBar(){
+
+let selected = document.querySelectorAll(".compare-checkbox:checked")
+
+if(selected.length > 0){
+
+bar.style.display = "block"
+
+countText.innerText = selected.length + " products selected"
+
+}else{
+
+bar.style.display = "none"
+
+}
+
+}
+
+checkboxes.forEach(cb => {
+
+cb.addEventListener("change", updateCompareBar)
+
+})
+
+
+compareBtn.addEventListener("click", function(){
+
+let selected = document.querySelectorAll(".compare-checkbox:checked")
+
+let ids = []
+
+selected.forEach(cb => {
+
+ids.push("compare=" + cb.value)
+
+})
+
+if(ids.length < 2){
+
+alert("Select at least 2 products")
+
+return
+
+}
+
+window.location.href = "/compare/?" + ids.join("&")
+
+})
+
+</script>
+
 {% endblock %}
+
