@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Search Results for "{{ query }}"</h2>
+
+{% for product in results %}
+
+<div class="card p-3 mb-3">
+
+    <a href="{% url 'product_detail' product.slug %}">
+        <h4>{{ product.name }}</h4>
+    </a>
+
+    <p>Brand: {{ product.brand.name }}</p>
+
+    <p>Score: {{ product.overall_score }}</p>
+
+</div>
+
+{% empty %}
+
+<p>No products found.</p>
+
+{% endfor %}
+
+{% endblock %}

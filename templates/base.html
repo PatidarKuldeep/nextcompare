@@ -33,16 +33,46 @@
 {% if not '/admin' in request.path %}
 <!-- 🔷 NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0d1b2a;">
-        <div class="container">
+
+    <div class="container">
+
+        <!-- Logo -->
         <a class="navbar-brand fw-bold text-warning" href="/">
             ⚡ TechCompare
         </a>
 
+        <!-- Search Bar -->
+        <form action="/search/" method="get" class="d-flex me-3">
+
+            <input 
+            type="text"
+            name="q"
+            placeholder="Search mobiles, laptops..."
+            class="form-control me-2">
+
+            <button class="btn btn-primary">
+                Search
+            </button>
+
+        </form>
+
+        <!-- Category Buttons -->
         <div>
-            <a href="{% url 'category_view' 'Mobile' %}" class="btn btn-outline-light btn-sm me-2">Mobiles</a>
-            <a href="{% url 'category_view' 'Laptop' %}" class="btn btn-light btn-sm fw-semibold">Laptops</a>
+
+            <a href="{% url 'category_view' 'Mobile' %}" 
+               class="btn btn-outline-light btn-sm me-2">
+               Mobiles
+            </a>
+
+            <a href="{% url 'category_view' 'Laptop' %}" 
+               class="btn btn-light btn-sm fw-semibold">
+               Laptops
+            </a>
+
         </div>
+
     </div>
+
 </nav>
 
 <!-- 🔷 MAIN CONTENT -->

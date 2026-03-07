@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Product
 from datetime import date, timedelta
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 
@@ -67,3 +68,23 @@ def compare_products(request):
     }
 
     return render(request, 'compare.html', context)
+
+
+def search(request):
+
+    query = request.GET.get("q")
+
+    results = []
+
+    if query:
+        results = Product.objects.filter(
+            Q(name__icontains=query) |
+            Q(brand__name__icontains=query)
+        )
+
+    context = {
+        "query": query,
+        "results": results
+    }
+
+    return render(request, "search.html", context)
