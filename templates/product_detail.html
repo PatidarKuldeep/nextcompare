@@ -37,7 +37,6 @@
           </div>
         </div>
 
-
         {% if product.verdict == "Best Overall" %}
         <span class="badge bg-success fs-6">{{ product.verdict }}</span>
 
@@ -60,6 +59,35 @@
             </a>
         </div>
         {% endif %}
+
+        <!-- Compare With Section -->
+        <hr>
+
+        <h4>Compare With</h4>
+
+        <form action="{% url 'compare_products' %}" method="get" class="d-flex gap-2">
+
+        <input type="hidden" name="compare" value="{{ product.id }}">
+
+        <select name="compare" class="form-select">
+
+        <option value="">Select product</option>
+
+        {% for p in compare_products %}
+
+        <option value="{{ p.id }}">
+        {{ p.name }}
+        </option>
+
+        {% endfor %}
+
+        </select>
+
+        <button class="btn btn-dark">
+        Compare
+        </button>
+
+        </form>
 
     </div>
 
@@ -108,7 +136,6 @@ Battery
 
 
 <div class="tab-content mt-3">
-
 
 <!-- GENERAL TAB -->
 
@@ -253,6 +280,11 @@ Battery
 </table>
 
 </div>
+
+
+</div>
+
+
 <hr>
 
 <h3 class="mt-5 mb-4">Similar Products</h3>
@@ -291,9 +323,6 @@ Score {{ p.overall_score }}
 </div>
 
 {% endfor %}
-
-</div>
-
 
 </div>
 
