@@ -110,13 +110,27 @@ def category_view(request, category_name):
             except:
                 pass
 
+    # Sorting
+    sort = request.GET.get("sort")
+
+    if sort == "price_low":
+        products = products.order_by("price")
+
+    elif sort == "price_high":
+        products = products.order_by("-price")
+
+    elif sort == "score":
+        products = products.order_by("-overall_score")
+
+    elif sort == "latest":
+        products = products.order_by("-launch_date")
+
     context = {
         "products": products,
         "category_name": category_name
     }
 
     return render(request, "category.html", context)
-
 
 def compare_products(request):
 
