@@ -28,4 +28,5 @@ urlpatterns = [
         "top-<str:category>/",
         views.top_products,
         name="top_products"),
+        path("processors/", views.processor_ranking, name="processor_ranking"),
 ]

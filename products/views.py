@@ -284,3 +284,13 @@ def top_products(request, category):
     }
 
     return render(request, "top_products.html", context)
+
+def processor_ranking(request):
+
+    processors = Processor.objects.order_by("-benchmark_score")
+
+    context = {
+        "processors": processors
+    }
+
+    return render(request, "processors.html", context)

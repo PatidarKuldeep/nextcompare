@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Top Mobile Processors{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<h1 class="mb-4">Top Mobile Processors</h1>
+
+<table class="table table-striped">
+
+<thead>
+<tr>
+<th>Rank</th>
+<th>Processor</th>
+<th>Brand</th>
+<th>Benchmark Score</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for p in processors %}
+
+<tr>
+
+<td>{{ forloop.counter }}</td>
+
+<td>{{ p.name }}</td>
+
+<td>{{ p.brand }}</td>
+
+<td>{{ p.benchmark_score }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
