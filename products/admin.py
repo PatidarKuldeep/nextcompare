@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import Category, Brand, Product, MobileSpecs, LaptopSpecs
-from .models import Processor
 from import_export.admin import ImportExportModelAdmin
-
+from .models import Category, Brand, Product, MobileSpecs, LaptopSpecs, Processor
 
 
 class MobileSpecsInline(admin.StackedInline):
@@ -28,11 +26,13 @@ class ProductAdmin(admin.ModelAdmin):
                 return [LaptopSpecsInline]
         return []
 
+
+# Normal models
 admin.site.register(Category)
 admin.site.register(Brand)
-admin.site.register(Processor)
 
+
+# Processor with Import / Export
+@admin.register(Processor)
 class ProcessorAdmin(ImportExportModelAdmin):
-    pass
-
-    
+    list_display = ("name", "brand", "benchmark_score")
