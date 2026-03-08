@@ -34,3 +34,5 @@ admin.site.register(Processor)
 
 class ProcessorAdmin(ImportExportModelAdmin):
     pass
+
+    
