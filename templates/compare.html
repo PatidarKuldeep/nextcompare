@@ -10,9 +10,7 @@
 
 <h2 class="text-center mb-4">Product Comparison</h2>
 
-{% if products|length == 2 %}
-
-{% with p1=products.0 p2=products.1 %}
+{% if products %}
 
 <div class="table-responsive">
 
@@ -20,25 +18,26 @@
 
 <tr>
 <th>Feature</th>
-<th>{{ p1.name }}</th>
-<th>{{ p2.name }}</th>
+
+{% for p in products %}
+<th>{{ p.name }}</th>
+{% endfor %}
+
 </tr>
 
 
 <tr>
 <td>Image</td>
 
+{% for p in products %}
+
 <td>
-{% if p1.image %}
-<img src="{{ p1.image.url }}" style="height:120px; object-fit:contain;">
+{% if p.image %}
+<img src="{{ p.image.url }}" style="height:120px; object-fit:contain;">
 {% endif %}
 </td>
 
-<td>
-{% if p2.image %}
-<img src="{{ p2.image.url }}" style="height:120px; object-fit:contain;">
-{% endif %}
-</td>
+{% endfor %}
 
 </tr>
 
@@ -46,13 +45,9 @@
 <tr>
 <td>Price</td>
 
-<td class="{% if p1.price < p2.price %}table-success{% endif %}">
-₹{{ p1.price }}
-</td>
-
-<td class="{% if p2.price < p1.price %}table-success{% endif %}">
-₹{{ p2.price }}
-</td>
+{% for p in products %}
+<td>₹{{ p.price }}</td>
+{% endfor %}
 
 </tr>
 
@@ -60,13 +55,9 @@
 <tr>
 <td>Score</td>
 
-<td class="{% if p1.overall_score > p2.overall_score %}table-success{% endif %}">
-{{ p1.overall_score }}
-</td>
-
-<td class="{% if p2.overall_score > p1.overall_score %}table-success{% endif %}">
-{{ p2.overall_score }}
-</td>
+{% for p in products %}
+<td>{{ p.overall_score }}</td>
+{% endfor %}
 
 </tr>
 
@@ -74,137 +65,135 @@
 <tr>
 <td>Verdict</td>
 
-<td>
-<span class="badge bg-success">
-{{ p1.verdict }}
-</span>
-</td>
+{% for p in products %}
 
 <td>
 <span class="badge bg-success">
-{{ p2.verdict }}
+{{ p.verdict }}
 </span>
 </td>
+
+{% endfor %}
 
 </tr>
 
 
-{% if "mobile" in p1.category.name|lower %}
 
 <tr>
 <td>RAM</td>
 
-<td class="{% if p1.mobilespecs.ram > p2.mobilespecs.ram %}table-success{% endif %}">
-{{ p1.mobilespecs.ram }} GB
+{% for p in products %}
+
+<td>
+
+{% if p.mobilespecs %}
+{{ p.mobilespecs.ram }} GB
+{% elif p.laptopspecs %}
+{{ p.laptopspecs.ram }} GB
+{% endif %}
+
 </td>
 
-<td class="{% if p2.mobilespecs.ram > p1.mobilespecs.ram %}table-success{% endif %}">
-{{ p2.mobilespecs.ram }} GB
-</td>
+{% endfor %}
 
 </tr>
+
 
 
 <tr>
 <td>Storage</td>
 
-<td class="{% if p1.mobilespecs.storage > p2.mobilespecs.storage %}table-success{% endif %}">
-{{ p1.mobilespecs.storage }} GB
+{% for p in products %}
+
+<td>
+
+{% if p.mobilespecs %}
+{{ p.mobilespecs.storage }} GB
+{% elif p.laptopspecs %}
+{{ p.laptopspecs.storage }} GB
+{% endif %}
+
 </td>
 
-<td class="{% if p2.mobilespecs.storage > p1.mobilespecs.storage %}table-success{% endif %}">
-{{ p2.mobilespecs.storage }} GB
-</td>
+{% endfor %}
 
 </tr>
+
 
 
 <tr>
 <td>Battery</td>
 
-<td class="{% if p1.mobilespecs.battery > p2.mobilespecs.battery %}table-success{% endif %}">
-{{ p1.mobilespecs.battery }} mAh
+{% for p in products %}
+
+<td>
+
+{% if p.mobilespecs %}
+{{ p.mobilespecs.battery }} mAh
+{% elif p.laptopspecs %}
+{{ p.laptopspecs.battery_backup }} Hours
+{% endif %}
+
 </td>
 
-<td class="{% if p2.mobilespecs.battery > p1.mobilespecs.battery %}table-success{% endif %}">
-{{ p2.mobilespecs.battery }} mAh
-</td>
+{% endfor %}
 
 </tr>
+
 
 
 <tr>
 <td>Camera</td>
 
-<td class="{% if p1.mobilespecs.camera > p2.mobilespecs.camera %}table-success{% endif %}">
-{{ p1.mobilespecs.camera }} MP
+{% for p in products %}
+
+<td>
+
+{% if p.mobilespecs %}
+{{ p.mobilespecs.camera }} MP
+{% else %}
+—
+{% endif %}
+
 </td>
 
-<td class="{% if p2.mobilespecs.camera > p1.mobilespecs.camera %}table-success{% endif %}">
-{{ p2.mobilespecs.camera }} MP
-</td>
+{% endfor %}
 
 </tr>
+
 
 
 <tr>
 <td>Processor</td>
 
-<td>
-{{ p1.mobilespecs.processor.name }}
-</td>
+{% for p in products %}
 
 <td>
-{{ p2.mobilespecs.processor.name }}
+
+{% if p.mobilespecs.processor %}
+{{ p.mobilespecs.processor.name }}
+
+{% elif p.laptopspecs.processor %}
+{{ p.laptopspecs.processor.name }}
+
+{% endif %}
+
 </td>
+
+{% endfor %}
 
 </tr>
 
-{% endif %}
+
 
 </table>
 
 </div>
 
-
-<h4 class="text-center mt-4">
-
-🏆 Winner:
-
-{% if p1.overall_score > p2.overall_score %}
-
-{{ p1.name }}
-
-{% elif p2.overall_score > p1.overall_score %}
-
-{{ p2.name }}
-
-{% else %}
-
-{% if p1.price < p2.price %}
-
-{{ p1.name }}
-
-{% elif p2.price < p1.price %}
-
-{{ p2.name }}
-
-{% else %}
-
-It's a Tie!
-
-{% endif %}
-
-{% endif %}
-
-</h4>
-
-{% endwith %}
-
 {% else %}
 
 <p class="text-center text-danger">
-Please select exactly 2 products to compare.
+Please select at least 2 products to compare.
 </p>
 
 {% endif %}

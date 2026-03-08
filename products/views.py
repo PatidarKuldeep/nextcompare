@@ -126,8 +126,11 @@ def compare_products(request):
 
     if len(products) < 2:
         return render(request, "compare.html", {
-            "error": "Please select at least 2 products to compare."
+            "error": "Select at least 2 products to compare."
         })
+
+    if len(products) > 4:
+        products = products[:4]
 
     context = {
         "products": products
