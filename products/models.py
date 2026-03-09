@@ -144,8 +144,6 @@ class Processor(models.Model):
 
     name = models.CharField(max_length=100)
 
-    slug = models.SlugField(blank=True)
-    
     brand = models.CharField(max_length=50, blank=True)
 
     antutu_score = models.IntegerField(null=True, blank=True)
@@ -155,13 +153,6 @@ class Processor(models.Model):
     geekbench_multi = models.IntegerField(null=True, blank=True)
 
     benchmark_score = models.IntegerField(default=0)
-
-    def save(self, *args, **kwargs):
-
-        if not self.slug:
-            self.slug = slugify(self.name)
-
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
