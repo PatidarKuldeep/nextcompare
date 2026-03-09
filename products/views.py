@@ -316,3 +316,15 @@ def processor_ranking(request):
 
     return render(request, "processors.html", context)
 
+def processor_detail(request, slug):
+
+    processor = get_object_or_404(Processor, slug=slug)
+
+    products = Product.objects.filter(processor=processor).order_by("-overall_score")
+
+    context = {
+        "processor": processor,
+        "products": products
+    }
+
+    return render(request, "processor_detail.html", context)

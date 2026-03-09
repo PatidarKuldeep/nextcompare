@@ -29,4 +29,5 @@ urlpatterns = [
         views.top_products,
         name="top_products"),
         path("processors/", views.processor_ranking, name="processor_ranking"),
+    path("processor/<slug:slug>/", views.processor_detail, name="processor_detail"),
 ]

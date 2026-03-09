@@ -1,0 +1,18 @@
+<h1>{{ processor.name }}</h1>
+
+<p>Brand: {{ processor.brand }}</p>
+<p>Antutu Score: {{ processor.antutu_score }}</p>
+<p>Geekbench Single: {{ processor.geekbench_single }}</p>
+<p>Geekbench Multi: {{ processor.geekbench_multi }}</p>
+
+<h2>Devices using this processor</h2>
+
+{% for product in products %}
+
+<div>
+    <a href="{% url 'product_detail' product.slug %}">
+        {{ product.name }}
+    </a>
+</div>
+
+{% endfor %}
