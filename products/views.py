@@ -3,6 +3,7 @@ from .models import Product, Processor
 from datetime import date, timedelta
 from django.db.models import Q
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 
 def home(request):
@@ -308,3 +309,18 @@ def processor_ranking(request):
     }
 
     return render(request, "processors.html", context)
+
+# Pagination
+paginator = Paginator(products, 12)   # 12 products per page
+
+page_number = request.GET.get("page")
+
+page_obj = paginator.get_page(page_number)
+
+context = {
+    "products": page_obj,
+    "page_obj": page_obj,
+    "category_name": category_name
+}
+
+return render(request, "category.html", context)

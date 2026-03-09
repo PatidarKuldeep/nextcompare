@@ -7,22 +7,14 @@
 <h2 class="mb-4">{{ category_name }} List</h2>
 
 <!-- 🔎 FILTERS -->
-<form method="get" class="row mb-4">
+<form method="get" class="row mb-4 g-2">
 
 <div class="col-md-2">
-<input 
-type="number"
-name="min_price"
-placeholder="Min Price"
-class="form-control">
+<input type="number" name="min_price" placeholder="Min Price" class="form-control">
 </div>
 
 <div class="col-md-2">
-<input 
-type="number"
-name="max_price"
-placeholder="Max Price"
-class="form-control">
+<input type="number" name="max_price" placeholder="Max Price" class="form-control">
 </div>
 
 <div class="col-md-2">
@@ -62,18 +54,14 @@ Apply Filters
 </button>
 </div>
 
-<div class="col-md-2">
-
+<div class="col-md-3 mt-2">
 <select name="sort" class="form-control">
-
 <option value="">Sort By</option>
 <option value="score">Best Score</option>
 <option value="price_low">Price: Low → High</option>
 <option value="price_high">Price: High → Low</option>
 <option value="latest">Latest</option>
-
 </select>
-
 </div>
 
 </form>
@@ -96,8 +84,7 @@ style="height:200px; object-fit:contain; background:#f8f9fa;">
 {% endif %}
 
 <h5>
-<a href="{% url 'product_detail' product.slug %}"
-class="text-decoration-none">
+<a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
 {{ product.name }}
 </a>
 </h5>
@@ -146,30 +133,73 @@ Add to Compare
 {% if products %}
 
 <div class="text-center mt-4">
-
-<button type="submit"
-class="btn btn-dark btn-lg">
+<button type="submit" class="btn btn-dark btn-lg">
 Compare Selected
 </button>
-
 </div>
 
 {% endif %}
 
 </form>
 
+
+<!-- PAGINATION -->
+{% if page_obj %}
+
+<div class="d-flex justify-content-center mt-4">
+
+<nav>
+
+<ul class="pagination">
+
+{% if page_obj.has_previous %}
+
+<li class="page-item">
+<a class="page-link"
+href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}">
+Previous
+</a>
+</li>
+
+{% endif %}
+
+
+{% for num in page_obj.paginator.page_range %}
+
+<li class="page-item {% if page_obj.number == num %}active{% endif %}">
+<a class="page-link"
+href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ num }}">
+{{ num }}
+</a>
+</li>
+
+{% endfor %}
+
+
+{% if page_obj.has_next %}
+
+<li class="page-item">
+<a class="page-link"
+href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.next_page_number }}">
+Next
+</a>
+</li>
+
+{% endif %}
+
+</ul>
+
+</nav>
+
+</div>
+
+{% endif %}
+
+
+<!-- COMPARE BAR -->
+
 <div id="compare-bar" 
-style="
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#111;
-color:white;
-padding:15px;
-display:none;
-z-index:9999;
-">
+style="position:fixed;bottom:0;left:0;width:100%;background:#111;color:white;padding:15px;display:none;z-index:9999;">
 
 <div class="container d-flex justify-content-between">
 
@@ -177,14 +207,14 @@ z-index:9999;
 0 products selected
 </span>
 
-<button id="compare-btn"
-class="btn btn-warning">
+<button id="compare-btn" class="btn btn-warning">
 Compare Now
 </button>
 
 </div>
 
 </div>
+
 
 <script>
 
@@ -200,7 +230,6 @@ let selected = document.querySelectorAll(".compare-checkbox:checked")
 if(selected.length > 0){
 
 bar.style.display = "block"
-
 countText.innerText = selected.length + " products selected"
 
 }else{
@@ -233,7 +262,6 @@ ids.push("compare=" + cb.value)
 if(ids.length < 2){
 
 alert("Select at least 2 products")
-
 return
 
 }
@@ -245,4 +273,3 @@ window.location.href = "/compare/?" + ids.join("&")
 </script>
 
 {% endblock %}
-
