@@ -126,8 +126,14 @@ def category_view(request, category_name):
     elif sort == "latest":
         products = products.order_by("-launch_date")
 
+    # Pagination
+    paginator = Paginator(products, 12)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "products": products,
+        "products": page_obj,
+        "page_obj": page_obj,
         "category_name": category_name
     }
 
@@ -310,17 +316,3 @@ def processor_ranking(request):
 
     return render(request, "processors.html", context)
 
-# Pagination
-paginator = Paginator(products, 12)   # 12 products per page
-
-page_number = request.GET.get("page")
-
-page_obj = paginator.get_page(page_number)
-
-context = {
-    "products": page_obj,
-    "page_obj": page_obj,
-    "category_name": category_name
-}
-
-return render(request, "category.html", context)
