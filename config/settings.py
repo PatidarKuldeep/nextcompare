@@ -13,6 +13,7 @@ import os
 import dj_database_url
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,7 +42,20 @@ INSTALLED_APPS = [
     "import_export",
     'products',
     'django.contrib.sitemaps',
+    'cloudinary',
+    'cloudinary_storage',
 ]
+
+import cloudinary
+
+cloudinary.config(
+  cloud_name = "diwarevzo",
+  api_key = "118621267546179",
+  api_secret = "Vdje_-8UtSg5wdETuz4kvGUOSZQ"
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
