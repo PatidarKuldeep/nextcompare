@@ -46,28 +46,29 @@ style="width: {{ product.overall_score }}%;">
 
 <h5 class="mt-4">Detailed Scores</h5>
 
-<p class="mb-1">Performance</p>
-<div class="progress mb-3">
-<div class="progress-bar bg-success"
-style="width: {{ product.performance_score }}%;">
-{{ product.performance_score|floatformat:0 }}/100
+<div class="d-flex gap-4 flex-wrap">
+
+<div class="score-circle">
+<div class="circle" style="--score: {{ product.performance_score|floatformat:0 }};">
+<span>{{ product.performance_score|floatformat:0 }}</span>
 </div>
+<p>Performance</p>
 </div>
 
-<p class="mb-1">Camera</p>
-<div class="progress mb-3">
-<div class="progress-bar bg-success"
-style="width: {{ product.camera_score }}%;">
-{{ product.camera_score|floatformat:0 }}/100
+<div class="score-circle">
+<div class="circle" style="--score: {{ product.camera_score|floatformat:0 }};">
+<span>{{ product.camera_score|floatformat:0 }}</span>
 </div>
+<p>Camera</p>
 </div>
 
-<p class="mb-1">Battery</p>
-<div class="progress mb-3">
-<div class="progress-bar bg-success"
-style="width: {{ product.battery_score }}%;">
-{{ product.battery_score|floatformat:0 }}/100
+<div class="score-circle">
+<div class="circle" style="--score: {{ product.battery_score|floatformat:0 }};">
+<span>{{ product.battery_score|floatformat:0 }}</span>
 </div>
+<p>Battery</p>
+</div>
+
 </div>
 
 {% if product.verdict == "Best Overall" %}

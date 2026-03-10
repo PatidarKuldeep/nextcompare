@@ -14,6 +14,37 @@
 
     <style>
 
+    .score-circle{
+        text-align:center;
+    }
+    
+    .circle{
+        width:80px;
+        height:80px;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:bold;
+        font-size:18px;
+        color:#000;
+        background:
+        conic-gradient(
+            #28a745 calc(var(--score)*1%),
+            #e6e6e6 0
+        );
+    }
+    
+    .circle span{
+        background:white;
+        width:60px;
+        height:60px;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
     #suggestions{
         width:300px;
         z-index:1000;
