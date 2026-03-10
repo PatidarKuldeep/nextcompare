@@ -109,8 +109,8 @@
 
 {% for p in products %}
 
-<td class="{% if p.mobilespecs.ram == products|map:'mobilespecs.ram'|max %}table-success{% endif %}">
-
+<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+    
 {% if p.mobilespecs %}
 {{ p.mobilespecs.ram }} GB
 
