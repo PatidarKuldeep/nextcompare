@@ -71,6 +71,10 @@ class Product(models.Model):
             self.performance_score = scores["performance"]
             self.camera_score = scores["camera"]
             self.battery_score = scores["battery"]
+            # gaming score
+            ram_score = min((self.mobilespecs.ram / 16) * 100, 100)
+            processor_score = self.mobilespecs.processor.benchmark_score if self.mobilespecs.processor else 0
+            self.gaming_score = (processor_score * 0.7) + (ram_score * 0.3)
             return scores["overall"]
         return 0
 

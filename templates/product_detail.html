@@ -46,8 +46,14 @@ style="width: {{ product.overall_score }}%;">
 
 <h5 class="mt-4">Detailed Scores</h5>
 
-<div class="d-flex gap-4 flex-wrap">
+<div class="score-circle">
+<div class="circle" style="--score: {{ product.gaming_score|floatformat:0 }};">
+<span>{{ product.gaming_score|floatformat:0 }}</span>
+</div>
+<p>Gaming</p>
+</div>
 
+<div class="d-flex gap-4 flex-wrap">
 <div class="score-circle">
 <div class="circle" style="--score: {{ product.performance_score|floatformat:0 }};">
 <span>{{ product.performance_score|floatformat:0 }}</span>
