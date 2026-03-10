@@ -64,9 +64,39 @@ class="text-decoration-none">
 
 <p class="mb-1">₹{{ product.price }}</p>
 
-<span class="badge bg-success">
+<p class="mb-1">
+
+<span class="badge bg-dark">
 Score {{ product.overall_score|floatformat:0 }}
 </span>
+
+{% if product.verdict == "Best Overall" %}
+
+<span class="badge bg-success">
+{{ product.verdict }}
+</span>
+
+{% elif product.verdict == "Excellent Choice" %}
+
+<span class="badge bg-primary">
+{{ product.verdict }}
+</span>
+
+{% elif product.verdict == "Good Option" %}
+
+<span class="badge bg-warning text-dark">
+{{ product.verdict }}
+</span>
+
+{% else %}
+
+<span class="badge bg-secondary">
+{{ product.verdict }}
+</span>
+
+{% endif %}
+
+</p>
 
 </div>
 
