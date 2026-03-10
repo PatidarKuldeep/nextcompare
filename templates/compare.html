@@ -12,6 +12,14 @@
 
 {% if products %}
 
+{% with winner=products|dictsortreversed:"overall_score"|first %}
+
+<div class="alert alert-success text-center">
+🏆 Winner: <strong>{{ winner.name }}</strong> (Highest Score)
+</div>
+
+{% endwith %}
+
 <div class="table-responsive">
 
 <table class="table table-bordered text-center align-middle">
@@ -52,14 +60,22 @@
 </tr>
 
 
+{% with best=products|dictsortreversed:"overall_score"|first %}
+
 <tr>
-<td>Score</td>
+<td><strong>Score</strong></td>
 
 {% for p in products %}
-<td>{{ p.overall_score }}</td>
+
+<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+{{ p.overall_score }}
+</td>
+
 {% endfor %}
 
 </tr>
+
+{% endwith %}
 
 
 <tr>
@@ -68,9 +84,16 @@
 {% for p in products %}
 
 <td>
-<span class="badge bg-success">
+
+{% if p.id == winner.id %}
+<span class="badge bg-success">Winner</span>
+
+{% else %}
+<span class="badge bg-secondary">
 {{ p.verdict }}
 </span>
+{% endif %}
+
 </td>
 
 {% endfor %}
@@ -78,18 +101,22 @@
 </tr>
 
 
+
+{% with best=products|dictsortreversed:"mobilespecs.ram"|first %}
 
 <tr>
 <td>RAM</td>
 
 {% for p in products %}
 
-<td>
+<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 {% if p.mobilespecs %}
 {{ p.mobilespecs.ram }} GB
+
 {% elif p.laptopspecs %}
 {{ p.laptopspecs.ram }} GB
+
 {% endif %}
 
 </td>
@@ -98,19 +125,25 @@
 
 </tr>
 
+{% endwith %}
 
+
+
+{% with best=products|dictsortreversed:"mobilespecs.storage"|first %}
 
 <tr>
 <td>Storage</td>
 
 {% for p in products %}
 
-<td>
+<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 {% if p.mobilespecs %}
 {{ p.mobilespecs.storage }} GB
+
 {% elif p.laptopspecs %}
 {{ p.laptopspecs.storage }} GB
+
 {% endif %}
 
 </td>
@@ -119,19 +152,25 @@
 
 </tr>
 
+{% endwith %}
 
+
+
+{% with best=products|dictsortreversed:"mobilespecs.battery"|first %}
 
 <tr>
 <td>Battery</td>
 
 {% for p in products %}
 
-<td>
+<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 {% if p.mobilespecs %}
 {{ p.mobilespecs.battery }} mAh
+
 {% elif p.laptopspecs %}
 {{ p.laptopspecs.battery_backup }} Hours
+
 {% endif %}
 
 </td>
@@ -140,19 +179,25 @@
 
 </tr>
 
+{% endwith %}
 
+
+
+{% with best=products|dictsortreversed:"mobilespecs.camera"|first %}
 
 <tr>
 <td>Camera</td>
 
 {% for p in products %}
 
-<td>
+<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 {% if p.mobilespecs %}
 {{ p.mobilespecs.camera }} MP
+
 {% else %}
 —
+
 {% endif %}
 
 </td>
@@ -160,6 +205,8 @@
 {% endfor %}
 
 </tr>
+
+{% endwith %}
 
 
 
@@ -183,7 +230,6 @@
 {% endfor %}
 
 </tr>
-
 
 
 </table>
