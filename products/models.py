@@ -43,6 +43,9 @@ class Product(models.Model):
     affiliate_link = models.URLField(blank=True, null=True)
 
     overall_score = models.FloatField(default=0)
+    performance_score = models.FloatField(default=0)
+    camera_score = models.FloatField(default=0)
+    battery_score = models.FloatField(default=0)
     verdict = models.CharField(max_length=100, blank=True)
 
     is_trending = models.BooleanField(default=False)
@@ -50,7 +53,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -63,9 +66,12 @@ class Product(models.Model):
         
     def calculate_score(self):
         if hasattr(self, "mobilespecs"):
-            return calculate_mobile_score(self.mobilespecs)
-        if hasattr(self, "laptopspecs"):
-            return calculate_laptop_score(self.laptopspecs)
+            from products.utils.scoring import calculate_mobile_scores
+            scores = calculate_mobile_scores(self.mobilespecs)
+            self.performance_score = scores["performance"]
+            self.camera_score = scores["camera"]
+            self.battery_score = scores["battery"]
+            return scores["overall"]
         return 0
 
     def generate_verdict(self):

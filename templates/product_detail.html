@@ -44,6 +44,27 @@ style="width: {{ product.overall_score }}%;">
 </div>
 </div>
 
+<h5 class="mt-4">Detailed Scores</h5>
+
+<ul class="list-group">
+
+<li class="list-group-item">
+Processor / Performance
+<span class="float-end">{{ product.performance_score }}/100</span>
+</li>
+
+<li class="list-group-item">
+Camera
+<span class="float-end">{{ product.camera_score }}/100</span>
+</li>
+
+<li class="list-group-item">
+Battery
+<span class="float-end">{{ product.battery_score }}/100</span>
+</li>
+
+</ul>
+
 
 {% if product.verdict == "Best Overall" %}
 <span class="badge bg-success fs-6">{{ product.verdict }}</span>
