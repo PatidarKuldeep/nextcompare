@@ -46,25 +46,29 @@ style="width: {{ product.overall_score }}%;">
 
 <h5 class="mt-4">Detailed Scores</h5>
 
-<ul class="list-group">
+<p class="mb-1">Performance</p>
+<div class="progress mb-3">
+<div class="progress-bar bg-success"
+style="width: {{ product.performance_score }}%;">
+{{ product.performance_score|floatformat:0 }}/100
+</div>
+</div>
 
-<li class="list-group-item">
-Processor / Performance
-<span class="float-end">{{ product.performance_score }}/100</span>
-</li>
+<p class="mb-1">Camera</p>
+<div class="progress mb-3">
+<div class="progress-bar bg-success"
+style="width: {{ product.camera_score }}%;">
+{{ product.camera_score|floatformat:0 }}/100
+</div>
+</div>
 
-<li class="list-group-item">
-Camera
-<span class="float-end">{{ product.camera_score }}/100</span>
-</li>
-
-<li class="list-group-item">
-Battery
-<span class="float-end">{{ product.battery_score }}/100</span>
-</li>
-
-</ul>
-
+<p class="mb-1">Battery</p>
+<div class="progress mb-3">
+<div class="progress-bar bg-success"
+style="width: {{ product.battery_score }}%;">
+{{ product.battery_score|floatformat:0 }}/100
+</div>
+</div>
 
 {% if product.verdict == "Best Overall" %}
 <span class="badge bg-success fs-6">{{ product.verdict }}</span>
