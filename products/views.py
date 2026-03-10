@@ -32,6 +32,7 @@ def home(request):
 def product_detail(request, slug):
 
     product = get_object_or_404(Product, slug=slug)
+    product.save()
 
     # Similar products
     similar_products = Product.objects.filter(
