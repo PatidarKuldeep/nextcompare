@@ -8,28 +8,24 @@ Compare latest mobiles and laptops. Discover recently launched and best overall 
 
 {% block content %}
 
+<!-- HERO -->
+
 <div class="text-center mb-5">
 
-<h1 class="display-5 fw-bold">Find the Best Tech Products</h1>
+<h1 class="fw-bold">Find the Best Tech Products</h1>
 
-<p class="lead text-muted">
-Compare mobiles & laptops with intelligent scoring system.
+<p class="text-muted">
+Compare mobiles & laptops with intelligent scoring system
 </p>
 
 <div class="mt-4">
 
-<a href="/top-Mobiles/"
-class="btn btn-dark btn-lg me-3">
-
+<a href="/top-Mobiles/" class="btn btn-dark me-2">
 Top 10 Mobiles
-
 </a>
 
-<a href="/top-Laptops/"
-class="btn btn-outline-dark btn-lg">
-
+<a href="/top-Laptops/" class="btn btn-outline-dark">
 Top 10 Laptops
-
 </a>
 
 </div>
@@ -37,54 +33,40 @@ Top 10 Laptops
 </div>
 
 
+<!-- RECENTLY LAUNCHED -->
 
-<!-- Recently Launched -->
+<h3 class="mb-4">🚀 Recently Launched</h3>
 
-<h3>🔥 Recently Launched</h3>
-
-<div class="row">
+<div class="row g-3">
 
 {% for product in recent_products %}
 
-<div class="col-md-4 mb-4 d-flex">
+<div class="col-6 col-md-4 col-lg-3">
 
-<div class="card p-3 shadow h-100">
+<div class="card p-3 text-center h-100">
 
 {% if product.image %}
 <img src="{{ product.image.url }}"
-class="img-fluid mb-2 w-100"
-style="height:200px; object-fit:contain; background:#f8f9fa;">
+class="img-fluid mb-2"
+style="height:120px; object-fit:contain;">
 {% endif %}
 
-<h5>
+<h6>
 
-<a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+<a href="{% url 'product_detail' product.slug %}"
+class="text-decoration-none">
+
 {{ product.name }}
+
 </a>
 
-</h5>
+</h6>
 
-<p>Price: ₹{{ product.price }}</p>
+<p class="mb-1">₹{{ product.price }}</p>
 
-<p>
-Score:
-<span class="badge bg-dark">
-{{ product.overall_score }}/100
+<span class="badge bg-success">
+Score {{ product.overall_score|floatformat:0 }}
 </span>
-</p>
-
-{% if product.verdict == "Best Overall" %}
-<span class="badge bg-success">{{ product.verdict }}</span>
-
-{% elif product.verdict == "Excellent Choice" %}
-<span class="badge bg-primary">{{ product.verdict }}</span>
-
-{% elif product.verdict == "Good Option" %}
-<span class="badge bg-warning text-dark">{{ product.verdict }}</span>
-
-{% else %}
-<span class="badge bg-danger">{{ product.verdict }}</span>
-{% endif %}
 
 </div>
 
@@ -100,40 +82,36 @@ Score:
 
 
 
-<!-- Trending Products -->
+<!-- TRENDING PRODUCTS -->
 
-<h3>🔥 Trending Products</h3>
+<h3 class="mb-4">🔥 Trending Products</h3>
 
-<div class="row">
+<div class="row g-3">
 
 {% for product in trending_products %}
 
-<div class="col-md-4 mb-4 d-flex">
+<div class="col-6 col-md-4 col-lg-3">
 
-<div class="card p-3 shadow h-100">
+<div class="card p-3 text-center h-100">
 
 {% if product.image %}
 <img src="{{ product.image.url }}"
-class="img-fluid mb-2 w-100"
-style="height:200px; object-fit:contain; background:#f8f9fa;">
+class="img-fluid mb-2"
+style="height:120px; object-fit:contain;">
 {% endif %}
 
-<h5>
+<h6>
 
-<a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+<a href="{% url 'product_detail' product.slug %}"
+class="text-decoration-none">
+
 {{ product.name }}
+
 </a>
 
-</h5>
+</h6>
 
-<p>Price: ₹{{ product.price }}</p>
-
-<p>
-Score:
-<span class="badge bg-dark">
-{{ product.overall_score }}/100
-</span>
-</p>
+<p class="mb-1">₹{{ product.price }}</p>
 
 <span class="badge bg-danger">
 🔥 Trending
@@ -157,53 +135,40 @@ Score:
 
 
 
-<!-- Best Overall -->
+<!-- BEST PRODUCTS -->
 
-<h3>⭐ Best Overall</h3>
+<h3 class="mb-4">⭐ Best Overall</h3>
 
-<div class="row">
+<div class="row g-3">
 
 {% for product in best_products %}
 
-<div class="col-md-4 mb-4 d-flex">
+<div class="col-6 col-md-4 col-lg-3">
 
-<div class="card p-3 shadow h-100">
+<div class="card p-3 text-center h-100">
 
 {% if product.image %}
 <img src="{{ product.image.url }}"
-class="img-fluid mb-2 w-100"
-style="height:200px; object-fit:contain; background:#f8f9fa;">
+class="img-fluid mb-2"
+style="height:120px; object-fit:contain;">
 {% endif %}
 
-<h5>
+<h6>
 
-<a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+<a href="{% url 'product_detail' product.slug %}"
+class="text-decoration-none">
+
 {{ product.name }}
+
 </a>
 
-</h5>
+</h6>
 
-<p>Price: ₹{{ product.price }}</p>
+<p class="mb-1">₹{{ product.price }}</p>
 
-<p>
-Score:
-<span class="badge bg-dark">
-{{ product.overall_score }}/100
+<span class="badge bg-success">
+Score {{ product.overall_score|floatformat:0 }}
 </span>
-</p>
-
-{% if product.verdict == "Best Overall" %}
-<span class="badge bg-success">{{ product.verdict }}</span>
-
-{% elif product.verdict == "Excellent Choice" %}
-<span class="badge bg-primary">{{ product.verdict }}</span>
-
-{% elif product.verdict == "Good Option" %}
-<span class="badge bg-warning text-dark">{{ product.verdict }}</span>
-
-{% else %}
-<span class="badge bg-danger">{{ product.verdict }}</span>
-{% endif %}
 
 </div>
 
