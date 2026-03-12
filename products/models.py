@@ -47,6 +47,17 @@ class Product(models.Model):
     description = models.TextField(blank=True)
 
     affiliate_link = models.URLField(blank=True, null=True)
+    
+    MARKETPLACE_CHOICES = [
+        ("amazon", "Amazon"),
+        ("flipkart", "Flipkart"),
+    ]
+    marketplace = models.CharField(
+        max_length=20,
+        choices=MARKETPLACE_CHOICES,
+        blank=True,
+        null=True
+    )
 
     overall_score = models.FloatField(default=0)
     performance_score = models.FloatField(default=0)
