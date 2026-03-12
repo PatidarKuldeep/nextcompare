@@ -11,9 +11,7 @@
 <!-- Product Image -->
 <div class="col-md-4 text-center">
 {% if product.image %}
-<img src="{{ product.image.url }}" loading="lazy">
-class="img-fluid"
-style="max-height:350px; object-fit:contain;">
+<img src="{{ product.image.url }}" class="img-fluid" style="max-height:350px; object-fit:contain;">
 {% endif %}
 </div>
 
@@ -92,13 +90,36 @@ style="width: {{ product.overall_score }}%;">
 
 
 {% if product.affiliate_link %}
+
 <div class="mt-4">
+
 <a href="{{ product.affiliate_link }}"
 target="_blank"
-class="btn btn-primary btn-lg">
+class="btn btn-lg d-flex align-items-center gap-2"
+style="background:#111; color:white; border-radius:8px; padding:12px 18px; width:fit-content;">
+
+{% if product.marketplace == "amazon" %}
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+style="height:20px;">
+Buy on Amazon
+
+{% elif product.marketplace == "flipkart" %}
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Flipkart_logo.svg"
+style="height:20px;">
+Buy on Flipkart
+
+{% else %}
+
 Buy Now
+
+{% endif %}
+
 </a>
+
 </div>
+
 {% endif %}
 
 
