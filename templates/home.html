@@ -8,29 +8,31 @@ Compare latest mobiles and laptops. Discover recently launched and best overall 
 
 {% block content %}
 
-<!-- HERO -->
 
-<div class="text-center mb-5">
+<!-- HERO SECTION -->
+
+<div class="hero-dark text-center text-light py-5 mb-5">
 
 <h1 class="fw-bold">Find the Best Tech Products</h1>
 
-<p class="text-muted">
+<p class="opacity-75">
 Compare mobiles & laptops with intelligent scoring system
 </p>
 
 <div class="mt-4">
 
-<a href="/top-Mobiles/" class="btn btn-dark me-2">
+<a href="/top-Mobiles/" class="btn btn-light me-2">
 Top 10 Mobiles
 </a>
 
-<a href="/top-Laptops/" class="btn btn-outline-dark">
+<a href="/top-Laptops/" class="btn btn-outline-light">
 Top 10 Laptops
 </a>
 
 </div>
 
 </div>
+
 
 
 <!-- RECENTLY LAUNCHED -->
@@ -64,39 +66,17 @@ class="text-decoration-none">
 
 <p class="mb-1">₹{{ product.price }}</p>
 
-<p class="mb-1">
-
 <span class="badge bg-dark">
 Score {{ product.overall_score|floatformat:0 }}
 </span>
 
-{% if product.verdict == "Best Overall" %}
+{% if product.verdict %}
 
 <span class="badge bg-success">
 {{ product.verdict }}
 </span>
 
-{% elif product.verdict == "Excellent Choice" %}
-
-<span class="badge bg-primary">
-{{ product.verdict }}
-</span>
-
-{% elif product.verdict == "Good Option" %}
-
-<span class="badge bg-warning text-dark">
-{{ product.verdict }}
-</span>
-
-{% else %}
-
-<span class="badge bg-secondary">
-{{ product.verdict }}
-</span>
-
 {% endif %}
-
-</p>
 
 </div>
 
@@ -196,39 +176,9 @@ class="text-decoration-none">
 
 <p class="mb-1">₹{{ product.price }}</p>
 
-<p class="mb-1">
-
-<span class="badge bg-dark">
+<span class="badge bg-success">
 Score {{ product.overall_score|floatformat:0 }}
 </span>
-
-{% if product.verdict == "Best Overall" %}
-
-<span class="badge bg-success">
-{{ product.verdict }}
-</span>
-
-{% elif product.verdict == "Excellent Choice" %}
-
-<span class="badge bg-primary">
-{{ product.verdict }}
-</span>
-
-{% elif product.verdict == "Good Option" %}
-
-<span class="badge bg-warning text-dark">
-{{ product.verdict }}
-</span>
-
-{% else %}
-
-<span class="badge bg-secondary">
-{{ product.verdict }}
-</span>
-
-{% endif %}
-
-</p>
 
 </div>
 
@@ -237,6 +187,7 @@ Score {{ product.overall_score|floatformat:0 }}
 {% endfor %}
 
 </div>
+
 
 
 {% endblock %}
