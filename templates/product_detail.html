@@ -11,7 +11,7 @@
 <!-- Product Image -->
 <div class="col-md-4 text-center">
 {% if product.image %}
-<img src="{{ product.image.url }}"
+<img src="{{ product.image.url }}" loading="lazy">
 class="img-fluid"
 style="max-height:350px; object-fit:contain;">
 {% endif %}

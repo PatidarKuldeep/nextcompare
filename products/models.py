@@ -3,6 +3,9 @@ from django.utils.text import slugify
 from django.db.models import F
 from products.utils.scoring import calculate_mobile_score, calculate_laptop_score
 
+# Cloudinary
+from cloudinary.models import CloudinaryField
+
 
 # -------------------
 # Category Model
@@ -28,6 +31,7 @@ class Brand(models.Model):
 # Product Model
 # -------------------
 class Product(models.Model):
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
 
@@ -37,7 +41,9 @@ class Product(models.Model):
     price = models.IntegerField()
     launch_date = models.DateField()
 
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    # Cloudinary Image
+    image = CloudinaryField('image', blank=True, null=True)
+
     description = models.TextField(blank=True)
 
     affiliate_link = models.URLField(blank=True, null=True)
@@ -46,6 +52,7 @@ class Product(models.Model):
     performance_score = models.FloatField(default=0)
     camera_score = models.FloatField(default=0)
     battery_score = models.FloatField(default=0)
+
     verdict = models.CharField(max_length=100, blank=True)
 
     is_trending = models.BooleanField(default=False)
@@ -54,8 +61,11 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-
+    # -------------------
+    # Save Method
+    # -------------------
     def save(self, *args, **kwargs):
+
         if not self.slug:
             self.slug = slugify(self.name)
 
@@ -63,30 +73,55 @@ class Product(models.Model):
         self.verdict = self.generate_verdict()
 
         super().save(*args, **kwargs)
-        
+
+
+    # -------------------
+    # Score Calculation
+    # -------------------
     def calculate_score(self):
+
         if hasattr(self, "mobilespecs"):
+
             from products.utils.scoring import calculate_mobile_scores
+
             scores = calculate_mobile_scores(self.mobilespecs)
+
             self.performance_score = scores["performance"]
             self.camera_score = scores["camera"]
             self.battery_score = scores["battery"]
-            # gaming score
+
             ram_score = min((self.mobilespecs.ram / 16) * 100, 100)
-            processor_score = self.mobilespecs.processor.benchmark_score if self.mobilespecs.processor else 0
+
+            processor_score = (
+                self.mobilespecs.processor.benchmark_score
+                if self.mobilespecs.processor
+                else 0
+            )
+
             self.gaming_score = (processor_score * 0.7) + (ram_score * 0.3)
+
             return scores["overall"]
+
         return 0
 
+
+    # -------------------
+    # Verdict Generator
+    # -------------------
     def generate_verdict(self):
+
         if self.overall_score >= 85:
             return "Best Overall"
+
         elif self.overall_score >= 70:
             return "Excellent Choice"
+
         elif self.overall_score >= 60:
             return "Good Option"
+
         else:
             return "Average"
+
 
     def __str__(self):
         return self.name
@@ -96,62 +131,85 @@ class Product(models.Model):
 # Mobile Specs
 # -------------------
 class MobileSpecs(models.Model):
+
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
 
     ram = models.IntegerField()
     storage = models.IntegerField()
     battery = models.IntegerField()
     camera = models.IntegerField()
+
     processor = models.ForeignKey(
         "Processor",
         on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
+
     display_type = models.CharField(max_length=50)
 
+
     def save(self, *args, **kwargs):
+
         super().save(*args, **kwargs)
+
         product = self.product
         score = product.calculate_score()
         verdict = product.generate_verdict()
+
         Product.objects.filter(id=product.id).update(
             overall_score=score,
             verdict=verdict
-            )
+        )
+
+
     def __str__(self):
         return f"Specs for {self.product.name}"
+
+
 # -------------------
 # Laptop Specs
 # -------------------
 class LaptopSpecs(models.Model):
+
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
 
     ram = models.IntegerField()
     storage = models.IntegerField()
+
     processor = models.ForeignKey(
         "Processor",
         on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
+
     gpu = models.BooleanField(default=False)
+
     battery_backup = models.IntegerField()
 
+
     def save(self, *args, **kwargs):
+
         super().save(*args, **kwargs)
+
         product = self.product
         score = product.calculate_score()
         verdict = product.generate_verdict()
+
         Product.objects.filter(id=product.id).update(
             overall_score=score,
             verdict=verdict
-            )
+        )
+
 
     def __str__(self):
         return f"Specs for {self.product.name}"
 
 
+# -------------------
+# Processor Model
+# -------------------
 class Processor(models.Model):
 
     name = models.CharField(max_length=100)
@@ -165,6 +223,7 @@ class Processor(models.Model):
     geekbench_multi = models.IntegerField(null=True, blank=True)
 
     benchmark_score = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.name
