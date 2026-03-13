@@ -38,7 +38,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://techcompare.store",
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+APPEND_SLASH = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Application definition
 
 INSTALLED_APPS = [
