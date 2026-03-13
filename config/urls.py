@@ -12,8 +12,6 @@ sitemaps = {
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("google123456abcdef.html", 
-    TemplateView.as_view(template_name="google123456abcdef.html")),
     path('', include('products.urls')),
     path(
     "robots.txt",
