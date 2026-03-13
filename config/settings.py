@@ -27,7 +27,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = ['.onrender.com', "techcompare.store", ".onrender.com",]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.techcompare.store",
+    "https://techcompare.store",
+]
 
 
 # Application definition
