@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.db.models import F
 from products.utils.scoring import calculate_mobile_score, calculate_laptop_score
-
+from django.urls import reverse
 # Cloudinary
 from cloudinary.models import CloudinaryField
 
@@ -72,6 +72,8 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[self.slug])
     # -------------------
     # Save Method
     # -------------------
