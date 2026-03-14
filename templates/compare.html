@@ -1,3 +1,4 @@
+```django
 {% extends 'base.html' %}
 
 {% block title %}Compare Products{% endblock %}
@@ -18,97 +19,67 @@
 🏆 Winner: <strong>{{ winner.name }}</strong> (Highest Score)
 </div>
 
-{% endwith %}
-
 <div class="table-responsive compare-container">
 
 <table class="table table-bordered text-start compare-table">
 
 <tr>
 <th>Feature</th>
-
 {% for p in products %}
 <th class="text-center">{{ p.name }}</th>
 {% endfor %}
-
 </tr>
 
 <tr>
 <td>Image</td>
-
 {% for p in products %}
-
 <td class="text-center">
 {% if p.image %}
 <img src="{{ p.image.url }}" style="height:120px; object-fit:contain;">
 {% endif %}
 </td>
-
 {% endfor %}
 </tr>
 
 <tr>
 <td>Price</td>
-
 {% for p in products %}
-<td>₹{{ p.price }}</td>
+<td>₹{{ p.price|floatformat:0 }}</td>
 {% endfor %}
-
 </tr>
 
-<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
-{{ p.overall_score }}
-</td>
-
+{% with best=products|dictsortreversed:"overall_score"|first %}
 <tr>
 <td><strong>Score</strong></td>
-
 {% for p in products %}
-
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 {{ p.overall_score|floatformat:1 }}
 </td>
-
 {% endfor %}
-
 </tr>
-
 {% endwith %}
 
 <tr>
 <td>Verdict</td>
-
 {% for p in products %}
-
 <td>
-
 {% if p.id == winner.id %}
 <span class="badge bg-success">Winner</span>
-
 {% else %}
-<span class="badge bg-secondary">
-{{ p.verdict }}
-</span>
+<span class="badge bg-secondary">{{ p.verdict }}</span>
 {% endif %}
-
 </td>
-
 {% endfor %}
-
 </tr>
 
 <tr>
 <td colspan="3" style="background:#f0f0f0;height:6px;"></td>
 </tr>
 
-
-{% with best=products|dictsortreversed:"mobilespecs.ram"|first %}   
-
+{% with best=products|dictsortreversed:"mobilespecs.ram"|first %}
 <tr>
 <td>RAM</td>
-
 {% for p in products %}
-
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
@@ -121,21 +92,14 @@ style="--score: {{ p.performance_score|floatformat:0 }}"></div>
 {% endif %}
 
 </td>
-
 {% endfor %}
-
 </tr>
-
 {% endwith %}
 
-
 {% with best=products|dictsortreversed:"mobilespecs.storage"|first %}
-
 <tr>
 <td>Storage</td>
-
 {% for p in products %}
-
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
@@ -148,21 +112,14 @@ style="--score: {{ p.performance_score|floatformat:0 }}"></div>
 {% endif %}
 
 </td>
-
 {% endfor %}
-
 </tr>
-
 {% endwith %}
 
-
 {% with best=products|dictsortreversed:"mobilespecs.battery"|first %}
-
 <tr>
 <td>Battery</td>
-
 {% for p in products %}
-
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
@@ -175,19 +132,13 @@ style="--score: {{ p.battery_score|floatformat:0 }}"></div>
 {% endif %}
 
 </td>
-
 {% endfor %}
-
 </tr>
-
 {% endwith %}
-
 
 <tr>
 <td>Camera</td>
-
 {% for p in products %}
-
 <td>
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
@@ -200,34 +151,23 @@ style="--score: {{ p.camera_score|floatformat:0 }}"></div>
 {% endif %}
 
 </td>
-
 {% endfor %}
-
 </tr>
-
 
 <tr>
 <td>Display</td>
-
 {% for p in products %}
-
 <td>
 {% if p.mobilespecs %}
 {{ p.mobilespecs.display_type }}
 {% endif %}
 </td>
-
 {% endfor %}
-
 </tr>
 
-
-<tr class="table-warning">
-
 <tr>
-
+<td>Processor</td>
 {% for p in products %}
-
 <td>
 
 {% if p.mobilespecs.processor %}
@@ -239,18 +179,12 @@ style="--score: {{ p.camera_score|floatformat:0 }}"></div>
 {% endif %}
 
 </td>
-
 {% endfor %}
-
 </tr>
 
-
 <tr>
-
 <td>Buy</td>
-
 {% for p in products %}
-
 <td class="text-center">
 
 {% if p.affiliate_link %}
@@ -278,14 +212,14 @@ Buy Now
 {% endif %}
 
 </td>
-
 {% endfor %}
-
 </tr>
 
 </table>
 
 </div>
+
+{% endwith %}
 
 {% else %}
 
@@ -298,3 +232,4 @@ Please select at least 2 products to compare.
 </div>
 
 {% endblock %}
+```
