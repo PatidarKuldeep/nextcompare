@@ -117,7 +117,7 @@ def calculate_mobile_scores(specs):
 
     battery_score = min((specs.battery / 6000) * 100, 100)
 
-    camera_score = min((specs.camera / 200) * 100, 100)
+    camera_score = 0
 
     performance_score = (processor_score * 0.7) + (ram_score * 0.3)
 
@@ -131,7 +131,7 @@ def calculate_mobile_scores(specs):
 
     return {
         "performance": round(performance_score,2),
-        "camera": round(camera_score,2),
+        "camera": 0,
         "battery": round(battery_score,2),
         "storage": round(storage_score,2),
         "overall": round(overall,2)
