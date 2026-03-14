@@ -137,6 +137,28 @@ style="--score: {{ p.battery_score|floatformat:0 }}"></div>
 {% endwith %}
 
 <tr>
+<td>Charging</td>
+
+{% for p in products %}
+<td>
+
+<div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
+style="--score: {{ p.charging_score|floatformat:0 }}"></div>
+
+{% if p.mobilespecs %}
+{{ p.mobilespecs.charging }}
+{% elif p.laptopspecs %}
+{{ p.laptopspecs.charging }}
+{% else %}
+—
+{% endif %}
+
+</td>
+{% endfor %}
+
+</tr>
+
+<tr>
 <td>Camera</td>
 {% for p in products %}
 <td>
