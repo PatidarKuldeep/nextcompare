@@ -19,6 +19,29 @@
 
 body{
 
+.quarter-score {
+width:60px;
+height:60px;
+border-radius:50%;
+background:
+conic-gradient(
+#28a745 calc(var(--score) * 0.25%),
+#e6e6e6 0
+);
+transform:rotate(-90deg);
+margin:auto;
+}
+
+.compare-table th{
+width:180px;
+text-align:left;
+font-weight:600;
+}
+
+.compare-table td{
+text-align:left;
+}
+
 .buy-btn{
 display:inline-flex;
 align-items:center;

@@ -22,7 +22,7 @@
 
 <div class="table-responsive">
 
-<table class="table table-bordered text-center align-middle">
+<table class="table table-bordered text-start compare-table">
 
 <tr>
 <th>Feature</th>
@@ -68,7 +68,9 @@
 {% for p in products %}
 
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
-{{ p.overall_score }}
+<div class="quarter-score"
+style="--score: {{ p.overall_score }};"></div>
+
 </td>
 
 {% endfor %}
@@ -100,12 +102,16 @@
 
 </tr>
 
+<tr>
+<td colspan="3" style="background:#f0f0f0;height:6px;"></td>
+</tr>
 
 
 {% with best=products|dictsortreversed:"mobilespecs.ram"|first %}
 
 <tr>
 <td>RAM</td>
+
 
 {% for p in products %}
 
@@ -193,7 +199,7 @@
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
 {% if p.mobilespecs %}
-{{ p.mobilespecs.camera }} MP
+{{ p.mobilespecs.camera }}
 
 {% else %}
 —
@@ -208,9 +214,13 @@
 
 {% endwith %}
 
-
-
 <tr>
+<th>Display</th>
+<td>{{ p1.mobilespecs.display_type }}</td>
+<td>{{ p2.mobilespecs.display_type }}</td>
+</tr>
+
+<tr class="table-warning"></tr>
 <td>Processor</td>
 
 {% for p in products %}
@@ -232,6 +242,50 @@
 </tr>
 
 
+<tr>
+<th>Buy</th>
+
+<td>
+
+{% if p1.affiliate_link %}
+<a href="{{ p1.affiliate_link }}" target="_blank" class="btn btn-dark">
+
+{% if p1.marketplace == "amazon" %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" style="height:18px;">
+Buy on Amazon
+
+{% elif p1.marketplace == "flipkart" %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Flipkart_logo.svg" style="height:18px;">
+Buy on Flipkart
+{% endif %}
+
+</a>
+{% endif %}
+
+</td>
+
+<td>
+
+{% if p2.affiliate_link %}
+<a href="{{ p2.affiliate_link }}" target="_blank" class="btn btn-dark">
+
+{% if p2.marketplace == "amazon" %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" style="height:18px;">
+Buy on Amazon
+
+{% elif p2.marketplace == "flipkart" %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Flipkart_logo.svg" style="height:18px;">
+Buy on Flipkart
+{% endif %}
+
+</a>
+{% endif %}
+
+</td>
+
+</tr>
+
+
 </table>
 
 </div>
@@ -247,3 +301,4 @@ Please select at least 2 products to compare.
 </div>
 
 {% endblock %}
+
