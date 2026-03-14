@@ -62,6 +62,7 @@ class Product(models.Model):
     overall_score = models.FloatField(default=0)
     performance_score = models.FloatField(default=0)
     camera_score = models.FloatField(default=0)
+    manual_camera_score = models.FloatField(null=True, blank=True)
     battery_score = models.FloatField(default=0)
 
     verdict = models.CharField(max_length=100, blank=True)
@@ -100,7 +101,11 @@ class Product(models.Model):
             scores = calculate_mobile_scores(self.mobilespecs)
 
             self.performance_score = scores["performance"]
-            self.camera_score = scores["camera"]
+            if self.manual_camera_score:
+                self.camera_score = self.manual_camera_score
+            else:
+                self.camera_score = scores["camera"]
+                
             self.battery_score = scores["battery"]
 
             ram_score = min((self.mobilespecs.ram / 16) * 100, 100)
