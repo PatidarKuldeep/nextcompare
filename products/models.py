@@ -123,8 +123,8 @@ class Product(models.Model):
                 self.camera_score * 0.35 +
                 self.battery_score * 0.20
             )
-            return overall
-            
+            return round(overall, 1)
+
         return 0
 
 
@@ -160,8 +160,8 @@ class MobileSpecs(models.Model):
     ram = models.IntegerField()
     storage = models.IntegerField()
     battery = models.IntegerField()
-    camera = models.IntegerField()
-
+    camera = models.CharField(max_length=100)
+    
     processor = models.ForeignKey(
         "Processor",
         on_delete=models.SET_NULL,
@@ -170,6 +170,7 @@ class MobileSpecs(models.Model):
     )
 
     display_type = models.CharField(max_length=50)
+    charging = models.CharField(max_length=50, blank=True, null=True)
 
 
     def save(self, *args, **kwargs):
