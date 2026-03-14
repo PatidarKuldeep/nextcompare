@@ -55,7 +55,7 @@
 <tr>
 <td><strong>Score</strong></td>
 {% for p in products %}
-<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+<td>
 {{ p.overall_score|floatformat:1 }}
 </td>
 {% endfor %}
@@ -83,7 +83,7 @@
 <tr>
 <td>RAM</td>
 {% for p in products %}
-<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+<td>
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
 style="--score: {{ p.performance_score|floatformat:0 }}"></div>
@@ -103,7 +103,7 @@ style="--score: {{ p.performance_score|floatformat:0 }}"></div>
 <tr>
 <td>Storage</td>
 {% for p in products %}
-<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+<td>
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
 style="--score: {{ p.performance_score|floatformat:0 }}"></div>
@@ -123,7 +123,7 @@ style="--score: {{ p.performance_score|floatformat:0 }}"></div>
 <tr>
 <td>Battery</td>
 {% for p in products %}
-<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+<td>
 
 <div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
 style="--score: {{ p.battery_score|floatformat:0 }}"></div>
