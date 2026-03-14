@@ -28,27 +28,24 @@
 <th>Feature</th>
 
 {% for p in products %}
-<th>{{ p.name }}</th>
+<th class="text-center">{{ p.name }}</th>
 {% endfor %}
 
 </tr>
-
 
 <tr>
 <td>Image</td>
 
 {% for p in products %}
 
-<td>
+<td class="text-center">
 {% if p.image %}
 <img src="{{ p.image.url }}" style="height:120px; object-fit:contain;">
 {% endif %}
 </td>
 
 {% endfor %}
-
 </tr>
-
 
 <tr>
 <td>Price</td>
@@ -59,7 +56,6 @@
 
 </tr>
 
-
 {% with best=products|dictsortreversed:"overall_score"|first %}
 
 <tr>
@@ -68,9 +64,7 @@
 {% for p in products %}
 
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
-<div class="quarter-score"
-style="--score: {{ p.overall_score }};"></div>
-
+{{ p.overall_score|floatformat:1 }}
 </td>
 
 {% endfor %}
@@ -78,7 +72,6 @@ style="--score: {{ p.overall_score }};"></div>
 </tr>
 
 {% endwith %}
-
 
 <tr>
 <td>Verdict</td>
@@ -112,17 +105,17 @@ style="--score: {{ p.overall_score }};"></div>
 <tr>
 <td>RAM</td>
 
-
 {% for p in products %}
 
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
-    
+
+<div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
+style="--score: {{ p.performance_score|floatformat:0 }}"></div>
+
 {% if p.mobilespecs %}
 {{ p.mobilespecs.ram }} GB
-
 {% elif p.laptopspecs %}
 {{ p.laptopspecs.ram }} GB
-
 {% endif %}
 
 </td>
@@ -132,7 +125,6 @@ style="--score: {{ p.overall_score }};"></div>
 </tr>
 
 {% endwith %}
-
 
 
 {% with best=products|dictsortreversed:"mobilespecs.storage"|first %}
@@ -144,12 +136,13 @@ style="--score: {{ p.overall_score }};"></div>
 
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
+<div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
+style="--score: {{ p.performance_score|floatformat:0 }}"></div>
+
 {% if p.mobilespecs %}
 {{ p.mobilespecs.storage }} GB
-
 {% elif p.laptopspecs %}
 {{ p.laptopspecs.storage }} GB
-
 {% endif %}
 
 </td>
@@ -159,7 +152,6 @@ style="--score: {{ p.overall_score }};"></div>
 </tr>
 
 {% endwith %}
-
 
 
 {% with best=products|dictsortreversed:"mobilespecs.battery"|first %}
@@ -171,12 +163,13 @@ style="--score: {{ p.overall_score }};"></div>
 
 <td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
 
+<div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
+style="--score: {{ p.battery_score|floatformat:0 }}"></div>
+
 {% if p.mobilespecs %}
 {{ p.mobilespecs.battery }} mAh
-
 {% elif p.laptopspecs %}
 {{ p.laptopspecs.battery_backup }} Hours
-
 {% endif %}
 
 </td>
@@ -187,23 +180,21 @@ style="--score: {{ p.overall_score }};"></div>
 
 {% endwith %}
 
-
-
-{% with best=products|dictsortreversed:"mobilespecs.camera"|first %}
 
 <tr>
 <td>Camera</td>
 
 {% for p in products %}
 
-<td class="{% if p.id == best.id %}text-success fw-bold{% endif %}">
+<td>
+
+<div class="{% if forloop.first %}score-left{% else %}score-right{% endif %}"
+style="--score: {{ p.camera_score|floatformat:0 }}"></div>
 
 {% if p.mobilespecs %}
 {{ p.mobilespecs.camera }}
-
 {% else %}
 —
-
 {% endif %}
 
 </td>
@@ -212,15 +203,25 @@ style="--score: {{ p.overall_score }};"></div>
 
 </tr>
 
-{% endwith %}
 
 <tr>
-<th>Display</th>
-<td>{{ p1.mobilespecs.display_type }}</td>
-<td>{{ p2.mobilespecs.display_type }}</td>
+<td>Display</td>
+
+{% for p in products %}
+
+<td>
+{% if p.mobilespecs %}
+{{ p.mobilespecs.display_type }}
+{% endif %}
+</td>
+
+{% endfor %}
+
 </tr>
 
-<tr class="table-warning"></tr>
+
+<tr class="table-warning">
+
 <td>Processor</td>
 
 {% for p in products %}
@@ -243,48 +244,42 @@ style="--score: {{ p.overall_score }};"></div>
 
 
 <tr>
-<th>Buy</th>
 
-<td>
+<td>Buy</td>
 
-{% if p1.affiliate_link %}
-<a href="{{ p1.affiliate_link }}" target="_blank" class="btn btn-dark">
+{% for p in products %}
 
-{% if p1.marketplace == "amazon" %}
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" style="height:18px;">
+<td class="text-center">
+
+{% if p.affiliate_link %}
+
+<a href="{{ p.affiliate_link }}"
+target="_blank"
+class="btn btn-dark d-flex align-items-center gap-2 justify-content-center">
+
+{% if p.marketplace == "amazon" %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+style="height:18px;">
 Buy on Amazon
 
-{% elif p1.marketplace == "flipkart" %}
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Flipkart_logo.svg" style="height:18px;">
+{% elif p.marketplace == "flipkart" %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Flipkart_logo.svg"
+style="height:18px;">
 Buy on Flipkart
+
+{% else %}
+Buy Now
 {% endif %}
 
 </a>
+
 {% endif %}
 
 </td>
 
-<td>
-
-{% if p2.affiliate_link %}
-<a href="{{ p2.affiliate_link }}" target="_blank" class="btn btn-dark">
-
-{% if p2.marketplace == "amazon" %}
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" style="height:18px;">
-Buy on Amazon
-
-{% elif p2.marketplace == "flipkart" %}
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Flipkart_logo.svg" style="height:18px;">
-Buy on Flipkart
-{% endif %}
-
-</a>
-{% endif %}
-
-</td>
+{% endfor %}
 
 </tr>
-
 
 </table>
 
@@ -301,4 +296,3 @@ Please select at least 2 products to compare.
 </div>
 
 {% endblock %}
-

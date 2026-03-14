@@ -19,19 +19,31 @@
 
 body{
 
-.quarter-score {
-width:60px;
-height:60px;
-border-radius:50%;
-background:
-conic-gradient(
-#28a745 calc(var(--score) * 0.25%),
-#e6e6e6 0
-);
-transform:rotate(-90deg);
-margin:auto;
+.compare-table td{
+position:relative;
 }
 
+.score-left,
+.score-right{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:18px;
+height:18px;
+border-radius:50%;
+background:conic-gradient(#28a745 calc(var(--score)*1%), #e6e6e6 0);
+}
+
+.score-left{
+right:-9px;
+clip-path: inset(0 50% 0 0);
+}
+
+.score-right{
+left:-9px;
+clip-path: inset(0 0 0 50%);
+}
+    
 .compare-table th{
 width:180px;
 text-align:left;
