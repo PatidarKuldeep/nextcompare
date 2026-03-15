@@ -13,8 +13,7 @@ urlpatterns = [
         'best-phones-under-<int:price>/',
         views.best_products,
         {'category_name': 'Mobiles'},
-        name='best_phones'
-    )
+        name='best_phones'),
     path(
         "compare/<slug:slug1>-vs-<slug:slug2>/",
         views.compare_slug,
