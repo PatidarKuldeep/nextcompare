@@ -8,10 +8,13 @@ urlpatterns = [
     path('compare/', views.compare_products, name='compare_products'),
     path("search/", views.search, name="search"),
     path("search-suggestions/", views.search_suggestions, name="search_suggestions"),
+    
     path(
-        "best/<str:category_name>/<int:price>/",
+        'best-phones-under-<int:price>/',
         views.best_products,
-        name="best_products"),
+        {'category_name': 'Mobiles'},
+        name='best_phones'
+    )
     path(
         "compare/<slug:slug1>-vs-<slug:slug2>/",
         views.compare_slug,
@@ -29,5 +32,7 @@ urlpatterns = [
         views.top_products,
         name="top_products"),
         path("processors/", views.processor_ranking, name="processor_ranking"),
+    
+
     
 ]

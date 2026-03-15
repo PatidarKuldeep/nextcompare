@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from django.db.models import Q
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.shortcuts import redirect
 
 
 def home(request):
@@ -151,14 +152,16 @@ def compare_products(request):
             "error": "Select at least 2 products to compare."
         })
 
-    if len(products) > 4:
-        products = products[:4]
+     # Take first two products
+    p1 = products[0]
+    p2 = products[1]
 
-    context = {
-        "products": products
-    }
-
-    return render(request, "compare.html", context)
+    # Redirect to SEO-friendly comparison URL
+    return redirect(
+        "compare_slug",
+        slug1=p1.slug,
+        slug2=p2.slug
+    )
 
 def search(request):
 

@@ -1,12 +1,21 @@
-```django
-
 
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Compare Products{% endblock %}
+{% block title %}
+{{ products.0.name }} vs {{ products.1.name }} Comparison | TechCompare
+{% endblock %}
+
+{% block meta_description %}
+<meta name="description"
+content="Compare {{products.0.name}} vs {{products.1.name}} specs, battery, performance, camera and price on TechCompare.">
+{% endblock %}
 
 {% block content %}
+
+
+<link rel="canonical"
+href="https://www.techcompare.store/compare/{{products.0.slug}}-vs-{{products.1.slug}}/">
 
 <div class="container mt-5">
 
@@ -23,6 +32,8 @@
 </div>
 
 <div class="table-responsive compare-container">
+
+
 
 <table class="table table-bordered text-start compare-table">
 
