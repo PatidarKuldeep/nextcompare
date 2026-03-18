@@ -87,6 +87,8 @@ class Product(models.Model):
         self.verdict = self.generate_verdict()
 
         super().save(*args, **kwargs)
+    def price_usd(self):
+        return int(self.price / 92)
 
 
     # -------------------

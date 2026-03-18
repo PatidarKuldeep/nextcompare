@@ -32,7 +32,7 @@
 </a>
 </p>
 <p><strong>Category:</strong> {{ product.category }}</p>
-<p><strong>Price:</strong> ₹{{ product.price }}</p>
+<p><strong>Price:</strong> ₹{{ product.price }} / ${{ product.price_usd }}</p>
 <p><strong>Launch Date:</strong> {{ product.launch_date }}</p>
 
 
@@ -229,7 +229,7 @@ Battery
 
 <tr>
 <th>Price</th>
-<td>₹{{ product.price }}</td>
+<td>₹{{ product.price }} / ${{ product.price_usd }}</td>
 </tr>
 
 </table>
@@ -396,7 +396,7 @@ class="text-decoration-none">
 
 </h6>
 
-<p class="mb-1">₹{{ p.price }}</p>
+<p class="mb-1">₹{{ product.price }} / ${{ product.price_usd }}</p>
 
 <span class="badge bg-success">
 Score {{ p.overall_score }}

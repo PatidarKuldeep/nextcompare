@@ -64,7 +64,7 @@ class="text-decoration-none">
 
 </h6>
 
-<p class="mb-1">₹{{ product.price }}</p>
+<p class="mb-1">₹{{ product.price }} / ${{ product.price_usd }}</p>
 
 <span class="badge bg-dark">
 Score {{ product.overall_score|floatformat:0 }}
@@ -121,7 +121,7 @@ class="text-decoration-none">
 
 </h6>
 
-<p class="mb-1">₹{{ product.price }}</p>
+<p class="mb-1">₹{{ product.price }} / ${{ product.price_usd }}</p>
 
 <span class="badge bg-danger">
 🔥 Trending
@@ -174,7 +174,7 @@ class="text-decoration-none">
 
 </h6>
 
-<p class="mb-1">₹{{ product.price }}</p>
+<p class="mb-1">₹{{ product.price }} / ${{ product.price_usd }}</p>
 
 <span class="badge bg-success">
 Score {{ product.overall_score|floatformat:0 }}
