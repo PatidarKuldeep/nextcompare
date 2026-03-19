@@ -320,3 +320,12 @@ def processor_ranking(request):
 
     return render(request, "processors.html", context)
 
+def privacy_policy(request):
+    return render(request, "privacy_policy.html")
+
+def terms(request):
+    return render(request, "terms.html")
+
+def contact(request):
+    return render(request, "contact.html")
+

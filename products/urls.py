@@ -31,6 +31,9 @@ urlpatterns = [
         views.top_products,
         name="top_products"),
         path("processors/", views.processor_ranking, name="processor_ranking"),
+    path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
+    path("terms/", views.terms, name="terms"),
+    path("contact/", views.contact, name="contact"),
     
 
     
